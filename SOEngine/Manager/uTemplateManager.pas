@@ -137,7 +137,6 @@ var
   i: Integer;
   vName, vPath, vArrVal: TJSONValue;
 begin
-
   if AJson.TryGetValue('Sounds', vArrVal) then
   begin
     vArr := AJSON.GetValue('Sounds') as TJSONArray;

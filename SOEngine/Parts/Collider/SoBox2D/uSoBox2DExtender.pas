@@ -48,9 +48,11 @@ begin
   FFixtureToColliderObjReferenceDict := TDict<Tb2Body, TSoColliderObj>.Create;
 
   // Initialization of Box2D
-  vGravVector.x := FOptions.Gravity.X;// + random * 10;
-  vGravVector.y := FOptions.Gravity.Y;// + random * 10;
+  vGravVector.x := FOptions.Gravity.X;
+  vGravVector.y := FOptions.Gravity.Y;
   FBox2DWorld := Tb2World.Create(vGravVector);
+
+  FBox2DWorld.AllowSleeping := False;
 
   FContactListener := TSoBox2DContactListener.Create;
   FContactListener.OnBeginContact := OnBeginContactHandler;
@@ -129,7 +131,8 @@ end;
 
 procedure TSoBox2DExtender.ProcessStep;
 begin
-  FBox2DWorld.Step(1, 1, 1);
+  FBox2DWorld.Step(1 / 60, 6, 2);
+ // FBox2DWorld.Step(1, 1, 1);
 end;
 
 end.

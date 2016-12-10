@@ -10,7 +10,8 @@ uses
   uUnitCreator in 'Other\uUnitCreator.pas',
   uUtils in 'Common\uUtils.pas',
   uLogicAssets in 'Other\uLogicAssets.pas',
-  uAcceleration in 'Other\uAcceleration.pas';
+  uAcceleration in 'Other\uAcceleration.pas',
+  uModelClasses in 'Model\uModelClasses.pas';
 
 {$R *.res}
 

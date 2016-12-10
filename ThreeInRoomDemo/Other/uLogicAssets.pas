@@ -4,7 +4,7 @@ interface
 
 uses
   uSoObject, uSoTypes, uGeometryClasses, System.Math, uIntersectorMethods, uSoObjectDefaultProperties,
-  uSoColliderObjectTypes, uAcceleration;
+  uSoColliderObjectTypes, uAcceleration, uModelClasses;
 
 type
   TFireKoef = record
@@ -102,6 +102,7 @@ end;
 
 class procedure TLogicAssets.MovingThroughSides(ASoObject: TSoObject);
 begin
+exit;
   ASoObject.X := ASoObject.X + Random * 3;
   ASoObject.Y := ASoObject.Y + Random * 3;
   ASoObject.Rotate := ASoObject.Rotate + Random * 2;
@@ -110,30 +111,54 @@ end;
 
 class procedure TLogicAssets.MovingToDestination(ASoObject: TSoObject);
 var
-  vAcceleration: TAcceleration;
-  vDest: TList<TPointF>;
+ // vAcceleration: TAcceleration;
+  vDest: TDestination;
   vAngle, vDir: Single;
+  vDx, vDy: Single;
+  vIsHere: Boolean;
+  vRend: TSoSprite;
 begin
+  vDx := 2;
+  vDy := 2;
   with ASoObject do begin
-    vAcceleration := ASoObject['Acceleration'].Val<TAcceleration>;
-    vDest := ASoObject['Destinations'].Val<TList<TPointF>>;
+//    vAcceleration := ASoObject['Acceleration'].Val<TAcceleration>;
+    vDest := ASoObject['Destination'].Val<TDestination>;
 
-    X := X - (vAcceleration.DX * Cos((Rotate + 90) * pi180));
-    Y := Y - (vAcceleration.DY * Sin((Rotate + 90) * pi180));
-
-    if vDest.Count > 0 then
+    vIsHere := True;
+    if (X <= vDest.X + vDx) and (X >= vDest.X - vDx) then
     begin
+      X := vDest.X;
+    end else
+      vIsHere := False;
 
-      vAngle := ArcTan2(vDest.First.Y - ASoObject.Y, vDest.First.X - ASoObject.X) / pi180;
-      vDir := NormalizeAngle((vAngle + 90) - (Rotate));
+    if (Y <= vDest.Y + vDy) and (Y >= vDest.Y - vDy) then
+    begin
+      Y := vDest.Y
+    end else
+      vIsHere := False;
 
-      if Distance(vDest.Last, Center) <= Abs(vAcceleration.DX * 2) then
-        vDest.Delete(0)
-      else
-        MakeTurnToDestination(ASoObject, vDir, vAcceleration.Da);
-    end;
+    if vIsHere then
+      Exit;
 
-    MovingThroughSidesInner(ASoObject, ASoObject['World'].Val<TSoObject>);
+
+   if (X > vDest.X) then
+   begin
+     vDx := -Abs(vDx);
+     ScaleX := -1;
+   end else
+    ScaleX := 1;
+
+   if (Y > vDest.Y) then
+   begin
+     vDy := -Abs(vDy);
+   end;
+
+   X := X + vDx;
+   Y := Y + vDy;
+
+   vRend := ASoObject[Rendition].Val<TSoSprite>;
+   vRend.NextFrame;
+
   end;
 end;
 
@@ -153,7 +178,7 @@ var
 begin
   vObj := TSoMouseHandler(Sender).Subject;
 
-  vObj.Properties[Collider].Val<TSoColliderObj>.ApplyForce(0, -10000);
+  vObj.Properties[Collider].Val<TSoColliderObj>.ApplyForce(0, -100);
 end;
 
 end.

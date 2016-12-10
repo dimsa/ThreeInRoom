@@ -4,7 +4,8 @@ interface
 
 uses
   uSoObject, uSoTypes, uLogicAssets, uUnitManager, System.SysUtils, uSoObjectDefaultProperties,
-  FMX.Dialogs, uGeometryClasses, uSoColliderObjectTypes, uCommonClasses, uAcceleration;
+  FMX.Dialogs, uGeometryClasses, uSoColliderObjectTypes, uCommonClasses, uAcceleration,
+  uModelClasses;
 
 type
   TGameUnit = class
@@ -27,6 +28,34 @@ type
     procedure Init; override;
   end;
 
+  TChair =  class(TRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TTabouret =  class(TRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TCactus =  class(TRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TTable =  class(TRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TGnome =  class(TGameUnit)
+  private
+    FDestination: TDestination;
+  public
+    procedure AddDestination(const APoint: TPointF);
+    procedure Init; override;
+  end;
+
 implementation
 
 uses
@@ -44,7 +73,7 @@ procedure TGameUnit.RandomizePosition(const ASubject: TSoObject);
 begin
   ASubject.X := Random(Round(FManager.ObjectByName('World').Width));
   ASubject.Y := Random(Round(FManager.ObjectByName('World').Height));
-  ASubject.Rotate := Random(360);
+//  ASubject.Rotate := Random(360);
 end;
 
 procedure TBed.Init;
@@ -55,14 +84,118 @@ begin
   with FManager.New do begin
     FContainer := ActiveContainer;
     AddRendition(vName);
-    AddColliderObj('Bed');
+    AddColliderObj(vName);
     AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
-    FContainer[Rendition].Val<TSoSprite>.BringToBack;
   end;
 
   RandomizePosition(FContainer);
+end;
 
+{ TChair }
+
+procedure TChair.Init;
+var
+  vName: string;
+begin
+  vName := 'Chair';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
+
+  RandomizePosition(FContainer);
+end;
+
+{ TTabouret }
+
+procedure TTabouret.Init;
+var
+  vName: string;
+begin
+  vName := 'Tabouret';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
+
+  RandomizePosition(FContainer);
+end;
+
+{ TCactus }
+
+procedure TCactus.Init;
+var
+  vName: string;
+begin
+  vName := 'Cactus';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
+
+  RandomizePosition(FContainer);
+end;
+
+{ TTable }
+
+procedure TTable.Init;
+var
+  vName: string;
+begin
+  vName := 'Table';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+   with AddColliderObj(vName) do
+   begin
+      ApplyForce(1000,1000);
+   end;
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+    AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
+  end;
+
+  RandomizePosition(FContainer);
+end;
+
+{ TGnome }
+
+procedure TGnome.AddDestination(const APoint: TPointF);
+begin
+  FDestination.Value := APoint;
+end;
+
+procedure TGnome.Init;
+var
+  vName: string;
+begin
+  vName := 'Gnome';
+  FDestination := TDestination.Create;
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    with AddColliderObj('Gnome1') do
+    begin
+      AddOnBeginContactHandler(TLogicAssets.OnCollideAsteroid);
+//      ApplyForce(1000,1000);
+    end;
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddProperty('Destination', FDestination);
+    AddNewLogic(TLogicAssets.MovingToDestination);
+  end;
+
+  RandomizePosition(FContainer);
+  FDestination.Value := FContainer.Position.XY;
 end;
 
 end.

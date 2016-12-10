@@ -34,8 +34,8 @@ var
 begin
   with AImage do
   begin
-    FParalX := FParalX + 0.5;
-    FParalY := FParalY - 1;
+    FParalX := FParalX; //+ 0;//0.5;
+    FParalY := FParalY ;//- 01;
     vProporX := (Bitmap.Width / FBackground.Width) * FParalX;
     vProporY := (Bitmap.Height / FBackground.Height) * FParalY;
 

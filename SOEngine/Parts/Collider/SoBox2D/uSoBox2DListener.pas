@@ -30,7 +30,7 @@ implementation
 
 procedure TSoBox2DContactListener.BeginContact(var contact: Tb2Contact);
 begin
-  if Assigned(FOnBeginContact) then
+   if Assigned(FOnBeginContact) then
     FOnBeginContact(contact);
 end;
 

@@ -3,10 +3,10 @@
         <ProjectGuid>{76C8D2B8-74BD-43C5-A796-EBD791E3F53D}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="SpriteShapeBuilder\SpriteShapeBuilder.dproj">
+        <Projects Include="SOEngine\SOEngine.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="SOEngine\SOEngine.dproj">
+        <Projects Include="SpriteShapeBuilder\SpriteShapeBuilder.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="ThreeInRoomDemo\ThreeInRoomGame.dproj">
@@ -20,15 +20,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="SpriteShapeBuilder">
-        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj"/>
-    </Target>
-    <Target Name="SpriteShapeBuilder:Clean">
-        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="SpriteShapeBuilder:Make">
-        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj" Targets="Make"/>
-    </Target>
     <Target Name="SOEngine">
         <MSBuild Projects="SOEngine\SOEngine.dproj"/>
     </Target>
@@ -37,6 +28,15 @@
     </Target>
     <Target Name="SOEngine:Make">
         <MSBuild Projects="SOEngine\SOEngine.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SpriteShapeBuilder">
+        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj"/>
+    </Target>
+    <Target Name="SpriteShapeBuilder:Clean">
+        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SpriteShapeBuilder:Make">
+        <MSBuild Projects="SpriteShapeBuilder\SpriteShapeBuilder.dproj" Targets="Make"/>
     </Target>
     <Target Name="ThreeInRoomGame">
         <MSBuild Projects="ThreeInRoomDemo\ThreeInRoomGame.dproj"/>
@@ -48,13 +48,13 @@
         <MSBuild Projects="ThreeInRoomDemo\ThreeInRoomGame.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="SpriteShapeBuilder;SOEngine;ThreeInRoomGame"/>
+        <CallTarget Targets="SOEngine;SpriteShapeBuilder;ThreeInRoomGame"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SpriteShapeBuilder:Clean;SOEngine:Clean;ThreeInRoomGame:Clean"/>
+        <CallTarget Targets="SOEngine:Clean;SpriteShapeBuilder:Clean;ThreeInRoomGame:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SpriteShapeBuilder:Make;SOEngine:Make;ThreeInRoomGame:Make"/>
+        <CallTarget Targets="SOEngine:Make;SpriteShapeBuilder:Make;ThreeInRoomGame:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

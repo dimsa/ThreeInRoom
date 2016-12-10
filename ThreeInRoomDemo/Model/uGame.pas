@@ -14,6 +14,7 @@ type
     FUnitCreator: TUnitCreator;
     FManager: TSoManager;
     FMouseDowned: Boolean;
+    FGnome: TGnome;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -59,12 +60,13 @@ end;
 procedure TGame.OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
 begin
   FMouseDowned := True;
+  FGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
 end;
 
 procedure TGame.OnMouseMove(Sender: TObject; AEventArgs: TMouseMoveEventArgs);
 begin
- // if FMouseDowned then
- //   FShip.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
+  if FMouseDowned then
+    FGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
 end;
 
 procedure TGame.OnMouseUp(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -81,9 +83,13 @@ procedure TGame.StartGame;
 var
   i: Integer;
 begin
-  for i := 0 to 4 do
-
+  Randomize;
   FUnitCreator.NewBed;
+  FUnitCreator.NewCactus;
+  FUnitCreator.NewTabouret;
+  FUnitCreator.NewChair;
+  FUnitCreator.NewTable;
+  FGnome := FUnitCreator.NewGnome;
 end;
 
 end.

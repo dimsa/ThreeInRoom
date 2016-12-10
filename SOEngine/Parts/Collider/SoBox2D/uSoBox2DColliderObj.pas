@@ -17,7 +17,7 @@ type
     function B2TransformFromSubject: Tb2Transform;
     procedure OnPositionChanged(ASender: TObject; APosition: TPosition);
     function BodyTypeToBox2DBodyType(const ABodyType: TBodyType): Tb2BodyType;
-    procedure Scale(const AScale: TPointF);
+    procedure Scale(AScale: TPointF);
   protected
     property Body: Tb2Body read FBody;
   public
@@ -141,7 +141,9 @@ begin
 
   FBody.SetTransform(vVector, APosition.Rotate);
   Scale(APosition.Scale);
+//  FBody.SetType(Tb2BodyType.b2_staticBody);
 
+//  FBody.SetType(Tb2BodyType.b2_dynamicBody);
 end;
 
 procedure TSoBox2DColliderObj.RefreshSubjectPosition;
@@ -150,7 +152,7 @@ begin
   FSubject.SetPositionSilent(FBody.GetPosition.x, FBody.GetPosition.y, FBody.GetAngle);
 end;
 
-procedure TSoBox2DColliderObj.Scale(const AScale: TPointF);
+procedure TSoBox2DColliderObj.Scale(AScale: TPointF);
 var
   vFix: Tb2Fixture;
   i, j: Integer;
@@ -158,6 +160,8 @@ begin
   if AScale = FLastScale then
     Exit;
 
+  AScale.X := Abs(AScale.X);
+  AScale.Y := Abs(AScale.Y);
   FLastScale := AScale;
 
   vFix := FBody.GetFixtureList;
@@ -184,8 +188,8 @@ begin
       end;
       e_edgeShape, e_chainShape: raise Exception.Create('Can not scale this type');
     end;
-
     vFix := vFix.GetNext;
+
     i := i + 1;
   end;
 end;
