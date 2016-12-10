@@ -4,17 +4,19 @@ interface
 
 uses
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
-  uUtils, uModel, uSoManager;
+  uUtils, uModel, uSoManager, uSoObject;
 
 type
   TGame = class
   private
-    FObjects: TList<TRoomObject>;
+    FObjects: TList<TGameUnit>;
     FMapPainter: TMapPainter; // Some object to draw parallax or map or etc
     FUnitCreator: TUnitCreator;
     FManager: TSoManager;
+    FRoom: TRoom;
     FMouseDowned: Boolean;
     FGnome: TGnome;
+    FWorld: TSoObject;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -40,13 +42,14 @@ begin
     TemplateManager.LoadSeJson(ResourcePath('ThreeInRoom.sejson'));
     TemplateManager.LoadSeCss( ResourcePath('Formatters.secss'));
 
-    FObjects := TList<TRoomObject>.Create;
+    FObjects := TList<TGameUnit>.Create;
 
     WorldManager.OnResize.Add(OnResize);
     WorldManager.OnMouseDown.Add(OnMouseDown);
     WorldManager.OnMouseUp.Add(OnMouseUp);
     WorldManager.OnMouseMove.Add(OnMouseMove);
 
+    FWorld := UnitManager.ByName('World').ActiveContainer;
     StartGame;
   end;
 end;
@@ -75,8 +78,18 @@ begin
 end;
 
 procedure TGame.OnResize(ASender: TObject);
+var
+  vScale: Single;
+  i: Integer;
 begin
 
+  vScale := FWorld.Height / 1024;
+  FRoom.Scale(vScale);
+
+  for i := 0 to FObjects.Count - 1 do
+  begin
+    FObjects[i].Scale(vScale);
+  end;
 end;
 
 procedure TGame.StartGame;
@@ -84,14 +97,28 @@ var
   i: Integer;
 begin
   Randomize;
-  FUnitCreator.NewBed;
-  FUnitCreator.NewCactus;
-  FUnitCreator.NewTabouret;
-  FUnitCreator.NewChair;
-  FUnitCreator.NewTable;
-  FUnitCreator.NewLocker;
-  FUnitCreator.NewLamp;
+
+  FRoom :=  FUnitCreator.NewRoom;
+
+  FObjects.Add(FUnitCreator.NewBed);
+  FObjects.Last.MoveTo(9, 14);
+  FObjects.Add(FUnitCreator.NewTabouret);
+  FObjects.Last.MoveTo(10, 6);
+  FObjects.Add(FUnitCreator.NewChair);
+  FObjects.Last.MoveTo(1, 12);
+  FObjects.Add(FUnitCreator.NewTable);
+  FObjects.Last.MoveTo(1, 10);
+  FObjects.Add(FUnitCreator.NewCactus);
+  FObjects.Last.MoveTo(2, 4);
+  FObjects.Add(FUnitCreator.NewLocker);
+  FObjects.Last.MoveTo(8, 1);
+  FObjects.Add(FUnitCreator.NewLamp);
+  FObjects.Last.MoveTo(4, 2);
   FGnome := FUnitCreator.NewGnome;
+  FObjects.Add(FGnome);
+
+  OnResize(nil);
+
 end;
 
 end.

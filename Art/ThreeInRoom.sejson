@@ -43,42 +43,47 @@
 	}, {
 		"Name": "Gnome4",
 		"Body": {
-			"Position": "416,192;480,288"
+			"Position": "288,288;352,384"
 		}
 	}, {
 		"Name": "Gnome5",
 		"Body": {
-			"Position": "480,192;544,288"
+			"Position": "352,288;416,384"
 		}
 	}, {
 		"Name": "Gnome6",
 		"Body": {
-			"Position": "544,192;608,288"
+			"Position": "288,384;352,480"
 		}
 	}, {
 		"Name": "Gnome7",
 		"Body": {
-			"Position": "608,192;672,288"
+			"Position": "352,384;416,480"
 		}
 	}, {
 		"Name": "Gnome8",
 		"Body": {
-			"Position": "672,192;736,288"
+			"Position": "352,480;416,576"
 		}
 	}, {
 		"Name": "LampYellow",
 		"Body": {
-			"Position": "192,288;288,544"
+			"Position": "192,288;288,536"
 		}
 	}, {
 		"Name": "Locker",
 		"Body": {
-			"Position": "288,288;448,579"
+			"Position": "0,534;160,825"
 		}
 	}, {
 		"Name": "LockerOpened",
 		"Body": {
-			"Position": "448,288;608,579"
+			"Position": "160,534;320,825"
+		}
+	}, {
+		"Name": "Room",
+		"Body": {
+			"Position": "416,0;1056,1024"
 		}
 	}],
 	"Colliders": [{
@@ -87,28 +92,28 @@
 			"Fixtures": [{
 				"Type": "Poly",
 				"Points": ["-152,48", "-153,71", "-100,72", "-100,48"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["99,48", "100,70", "153,71", "152,47"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["-151,-28", "-151,-9", "-101,-9", "-102,-29"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["104,-30", "104,-12", "154,-10", "151,-29"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
@@ -120,29 +125,29 @@
 		"Body": {
 			"Fixtures": [{
 				"Type": "Poly",
-				"Points": ["-78,76", "-78,96", "-63,96", "-64,79"],
-				"Density": "0",
+				"Points": ["-78,76", "-78,96", "-58,93", "-58,79"],
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["63,73", "62,96", "78,95", "78,73"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["-74,-53", "-77,-33", "-64,-32", "-62,-51"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Poly",
 				"Points": ["68,-51", "67,-32", "81,-32", "81,-52"],
-				"Density": "0",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
@@ -155,32 +160,32 @@
 			"Fixtures": [{
 				"Type": "Circle",
 				"Center": "-33,61",
-				"Radius": "15",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
 				"Center": "33,62",
-				"Radius": "15",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
 				"Center": "-33,22",
-				"Radius": "10",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
 				"Center": "33,22",
-				"Radius": "15",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
@@ -192,33 +197,33 @@
 		"Body": {
 			"Fixtures": [{
 				"Type": "Circle",
-				"Center": "-31,34",
-				"Radius": "15",
-				"Density": "0",
+				"Center": "-32,31",
+				"Radius": "16",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
-				"Center": "29,34",
-				"Radius": "15",
-				"Density": "0",
+				"Center": "29,31",
+				"Radius": "16",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
 				"Center": "-28,-13",
-				"Radius": "15",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}, {
 				"Type": "Circle",
 				"Center": "30,-14",
-				"Radius": "15",
-				"Density": "0",
+				"Radius": "12",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
@@ -230,9 +235,9 @@
 		"Body": {
 			"Fixtures": [{
 				"Type": "Circle",
-				"Center": "0,35",
-				"Radius": "15",
-				"Density": "0",
+				"Center": "1,31",
+				"Radius": "16",
+				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
@@ -244,8 +249,21 @@
 		"Body": {
 			"Fixtures": [{
 				"Type": "Circle",
-				"Center": "0,35",
-				"Radius": "15",
+				"Center": "1,31",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "LampYellow",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Poly",
+				"Points": ["-31,63", "-30,110", "29,109", "27,63"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
@@ -280,17 +298,38 @@
 			"Type": "Dynamic"
 		}
 	}, {
-		"Name": "LampYellow",
+		"Name": "Room",
 		"Body": {
 			"Fixtures": [{
 				"Type": "Poly",
-				"Points": ["-29,59", "-28,106", "31,105", "29,59"],
+				"Points": ["-317,-146", "-320,-131", "319,-128", "319,-142"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}, {
+				"Type": "Poly",
+				"Points": ["-318,-134", "-317,511", "-307,511", "-304,-131"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}, {
+				"Type": "Poly",
+				"Points": ["309,-133", "308,509", "319,512", "320,-126"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}, {
+				"Type": "Poly",
+				"Points": ["-312,501", "-310,511", "311,511", "313,497"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}],
 	"Templates": [{
@@ -301,6 +340,67 @@
 			"Margin": "0,-42",
 			"Resources": ["Gnome1", "Gnome2", "Gnome3", "Gnome4", "Gnome5", "Gnome6", "Gnome7", "Gnome8"]
 		}
-	}]
+	}, {
+		"Name": "Room",
+		"Type": "Sprite",
 
+		"Body": {
+			"Resources": ["Room"],
+			"Justify": "TopLeft"
+		}
+	}, {
+		"Name": "Bed",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Bed"],
+			"Justify": "BottomRight"
+		}
+	},{
+		"Name": "Locker",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Locker"],
+			"Justify": "TopCenter"
+		}
+	},
+	{
+		"Name": "LampYellow",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["LampYellow"],
+			"Justify": "TopCenter"
+		}
+	},{
+		"Name": "Table",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Table"],
+			"Justify": "TopRight"
+		}
+	},
+	{
+		"Name": "Chair",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Chair"],
+			"Justify": "BottomRight"
+		}
+	},
+	{
+		"Name": "Tabouret",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Tabouret"],
+			"Justify": "BottomRight"
+		}
+	},
+	{
+		"Name": "Cactus",
+		"Type": "Sprite",
+		"Body": {
+			"Resources": ["Cactus"],
+			"Justify": "BottomRight"
+		}
+	}
+	]
 }

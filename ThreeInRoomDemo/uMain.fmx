@@ -1,9 +1,10 @@
 object ThreeInRoom: TThreeInRoom
+  StyleName = '768'
   Left = 0
   Top = 0
   Caption = 'Three In Room'
-  ClientHeight = 480
-  ClientWidth = 640
+  ClientHeight = 768
+  ClientWidth = 480
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
@@ -14,8 +15,8 @@ object ThreeInRoom: TThreeInRoom
       item
       end>
     Align = Client
-    Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Width = 480.000000000000000000
+    Size.Height = 768.000000000000000000
     Size.PlatformDefault = False
     WrapMode = Stretch
   end

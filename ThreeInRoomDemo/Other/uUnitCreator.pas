@@ -13,6 +13,7 @@ type
   private
     FUnitManager: TUnitManager;
   public
+    function NewRoom: TRoom;
     function NewBed: TBed;
     function NewCactus: TCactus;
     function NewChair: TChair;
@@ -64,6 +65,11 @@ end;
 function TUnitCreator.NewLocker: TLocker;
 begin
   Result := TLocker.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewRoom: TRoom;
+begin
+  Result := TRoom.Create(FUnitManager);
 end;
 
 function TUnitCreator.NewTable: TTable;

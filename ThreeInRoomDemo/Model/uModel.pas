@@ -12,15 +12,22 @@ type
   protected
     FContainer: TSoObject;
     FManager: TUnitManager;
-    procedure Init; virtual; abstract;
+    procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
   public
+    procedure Scale(const AScale: Single);
+    procedure MoveTo(const AX, AY: Integer);
     constructor Create(const AManager: TUnitManager); virtual;
   end;
 
   TRoomObject =  class(TGameUnit)
   public
 
+  end;
+
+  TRoom = class(TGameUnit)
+  public
+    procedure Init; override;
   end;
 
   TBed =  class(TRoomObject)
@@ -83,23 +90,53 @@ begin
   Init;
 end;
 
+procedure TGameUnit.Init;
+begin
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddProperty('World', FManager.ObjectByName('World'));
+  end;
+end;
+
+procedure TGameUnit.MoveTo(const AX, AY: Integer);
+var
+  vW, vH, vDw, vDh: Single;
+  vWorld: TSoObject;
+  vScale: Single;
+begin
+  vWorld := FManager.ObjectByName('World');
+  vScale := vWorld.Height / 1024;
+  vW := 640 * Abs(vScale);
+  vH := 1024 * Abs(vScale);
+  vDw := vW / 20;
+  vDh := vH / 32;
+
+  FContainer.X := vDw * Ax;
+  FContainer.Y := vDh * 12 + vDh * Ay;
+end;
+
 procedure TGameUnit.RandomizePosition(const ASubject: TSoObject);
 begin
   ASubject.X := Random(Round(FManager.ObjectByName('World').Width));
   ASubject.Y := Random(Round(FManager.ObjectByName('World').Height));
-//  ASubject.Rotate := Random(360);
+end;
+
+procedure TGameUnit.Scale(const AScale: Single);
+begin
+  FContainer.Scale := AScale;
+//  FContainer.X := FContainer.X * AScale;
+//  FContainer.Y := FContainer.Y * AScale;
 end;
 
 procedure TBed.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Bed';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
@@ -112,12 +149,12 @@ procedure TChair.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Chair';
-  with FManager.New do begin
+  with FManager.ByObject(FContainer) do begin
     FContainer := ActiveContainer;
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
@@ -130,12 +167,11 @@ procedure TTabouret.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Tabouret';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
@@ -148,12 +184,11 @@ procedure TCactus.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Cactus';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
@@ -166,12 +201,11 @@ procedure TTable.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Table';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
@@ -189,16 +223,15 @@ procedure TGnome.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Gnome';
   FDestination := TDestination.Create;
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     with AddColliderObj('Gnome1') do
     begin
       AddOnBeginContactHandler(TLogicAssets.OnCollideAsteroid);
     end;
-    AddProperty('World', FManager.ObjectByName('World'));
     AddProperty('Destination', FDestination);
     AddNewLogic(TLogicAssets.MovingToDestination);
   end;
@@ -213,12 +246,11 @@ procedure TLocker.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'Locker';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
     AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
   end;
@@ -237,17 +269,33 @@ procedure TLamp.Init;
 var
   vName: string;
 begin
+  inherited;
   vName := 'LampYellow';
-  with FManager.New do begin
-    FContainer := ActiveContainer;
+  with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
     AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
   end;
 
   RandomizePosition(FContainer);
+end;
+
+{ TRoom }
+
+procedure TRoom.Init;
+var
+  vName: string;
+begin
+  inherited;
+  vName := 'Room';
+  with FManager.ByObject(FContainer) do begin
+    AddRendition(vName);
+    AddColliderObj(vName);
+  end;
+
+  FContainer.X := 0;
+  FContainer.Y := 0;
 end;
 
 end.

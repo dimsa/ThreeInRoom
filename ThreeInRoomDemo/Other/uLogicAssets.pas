@@ -144,9 +144,9 @@ begin
    if (X > vDest.X) then
    begin
      vDx := -Abs(vDx);
-     ScaleX := -1;
+     ScaleX := -Abs(ScaleX);
    end else
-    ScaleX := 1;
+    ScaleX := Abs(ScaleX);
 
    if (Y > vDest.Y) then
    begin
