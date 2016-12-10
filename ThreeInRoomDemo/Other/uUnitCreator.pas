@@ -18,6 +18,8 @@ type
     function NewChair: TChair;
     function NewTabouret: TTabouret;
     function NewTable: TTable;
+    function NewLocker: TLocker;
+    function NewLamp: TLamp;
     function NewGnome: TGnome;
     constructor Create(const AUnitManager: TUnitManager);
   end;
@@ -52,6 +54,16 @@ end;
 function TUnitCreator.NewGnome: TGnome;
 begin
   Result := TGnome.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewLamp: TLamp;
+begin
+  Result := TLamp.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewLocker: TLocker;
+begin
+  Result := TLocker.Create(FUnitManager);
 end;
 
 function TUnitCreator.NewTable: TTable;

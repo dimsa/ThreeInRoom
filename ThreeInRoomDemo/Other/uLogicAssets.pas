@@ -178,7 +178,7 @@ var
 begin
   vObj := TSoMouseHandler(Sender).Subject;
 
-  vObj.Properties[Collider].Val<TSoColliderObj>.ApplyForce(0, -100);
+  vObj.Properties[Collider].Val<TSoColliderObj>.ApplyForce((Random - 0.5) * 1000, (Random - 0.5) * 1000);
 end;
 
 end.

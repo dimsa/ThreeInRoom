@@ -65,6 +65,21 @@
 		"Body": {
 			"Position": "672,192;736,288"
 		}
+	}, {
+		"Name": "LampYellow",
+		"Body": {
+			"Position": "192,288;288,544"
+		}
+	}, {
+		"Name": "Locker",
+		"Body": {
+			"Position": "288,288;448,579"
+		}
+	}, {
+		"Name": "LockerOpened",
+		"Body": {
+			"Position": "448,288;608,579"
+		}
 	}],
 	"Colliders": [{
 		"Name": "Bed",
@@ -238,6 +253,45 @@
 			}],
 			"Type": "Dynamic"
 		}
+	}, {
+		"Name": "Locker",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Poly",
+				"Points": ["-73,116", "-71,140", "71,140", "72,118"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "LockerOpened",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Poly",
+				"Points": ["-75,120", "-73,142", "76,140", "74,118"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "LampYellow",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Poly",
+				"Points": ["-29,59", "-28,106", "31,105", "29,59"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
 	}],
 	"Templates": [{
 		"Name": "Gnome",
@@ -248,5 +302,5 @@
 			"Resources": ["Gnome1", "Gnome2", "Gnome3", "Gnome4", "Gnome5", "Gnome6", "Gnome7", "Gnome8"]
 		}
 	}]
-	
+
 }

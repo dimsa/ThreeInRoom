@@ -89,6 +89,8 @@ begin
   FUnitCreator.NewTabouret;
   FUnitCreator.NewChair;
   FUnitCreator.NewTable;
+  FUnitCreator.NewLocker;
+  FUnitCreator.NewLamp;
   FGnome := FUnitCreator.NewGnome;
 end;
 

@@ -48,6 +48,20 @@ type
     procedure Init; override;
   end;
 
+  TLocker = class(TRoomObject)
+  private
+    FIsOpened: Boolean;
+    procedure SetIsOpened(const Value: Boolean);
+  public
+    procedure Init; override;
+    property IsOpened: Boolean read FIsOpened write SetIsOpened;
+  end;
+
+  TLamp = class(TRoomObject)
+  public
+    procedure Init; override;
+  end;
+
   TGnome =  class(TGameUnit)
   private
     FDestination: TDestination;
@@ -156,13 +170,9 @@ begin
   with FManager.New do begin
     FContainer := ActiveContainer;
     AddRendition(vName);
-   with AddColliderObj(vName) do
-   begin
-      ApplyForce(1000,1000);
-   end;
+    AddColliderObj(vName);
     AddProperty('World', FManager.ObjectByName('World'));
     AddNewLogic(TLogicAssets.MovingThroughSides);
-    AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
   end;
 
   RandomizePosition(FContainer);
@@ -187,7 +197,6 @@ begin
     with AddColliderObj('Gnome1') do
     begin
       AddOnBeginContactHandler(TLogicAssets.OnCollideAsteroid);
-//      ApplyForce(1000,1000);
     end;
     AddProperty('World', FManager.ObjectByName('World'));
     AddProperty('Destination', FDestination);
@@ -196,6 +205,49 @@ begin
 
   RandomizePosition(FContainer);
   FDestination.Value := FContainer.Position.XY;
+end;
+
+{ TLocker }
+
+procedure TLocker.Init;
+var
+  vName: string;
+begin
+  vName := 'Locker';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+    AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
+  end;
+
+  RandomizePosition(FContainer);
+end;
+
+procedure TLocker.SetIsOpened(const Value: Boolean);
+begin
+  FIsOpened := Value;
+end;
+
+{ TLamp }
+
+procedure TLamp.Init;
+var
+  vName: string;
+begin
+  vName := 'LampYellow';
+  with FManager.New do begin
+    FContainer := ActiveContainer;
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddProperty('World', FManager.ObjectByName('World'));
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+    AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
+  end;
+
+  RandomizePosition(FContainer);
 end;
 
 end.
