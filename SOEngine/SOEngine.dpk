@@ -1,0 +1,151 @@
+package SOEngine;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  fmx;
+
+contains
+  uConstantGroup in 'ExpressionParser\uConstantGroup.pas',
+  uExpressionParser in 'ExpressionParser\uExpressionParser.pas',
+  uFastFields in 'ExpressionParser\uFastFields.pas',
+  uFunctionGroup in 'ExpressionParser\uFunctionGroup.pas',
+  uOperandGroup in 'ExpressionParser\uOperandGroup.pas',
+  uParserValue in 'ExpressionParser\uParserValue.pas',
+  uTextProc in 'ExpressionParser\uTextProc.pas',
+  uClasses in 'Utils\uClasses.pas',
+  uNamedList in 'Utils\uNamedList.pas',
+  uGeometryClasses in 'Common\uGeometryClasses.pas',
+  uEasyDevice in 'Main\uEasyDevice.pas',
+  uEngine2D in 'Main\uEngine2D.pas',
+  uEngine2DClasses in 'Main\uEngine2DClasses.pas',
+  uEngine2DIntersector in 'Main\uEngine2DIntersector.pas',
+  uEngine2DManager in 'Main\uEngine2DManager.pas',
+  uEngine2DOptions in 'Main\uEngine2DOptions.pas',
+  uEngine2DStatus in 'Main\uEngine2DStatus.pas',
+  uEngine2DThread in 'Main\uEngine2DThread.pas',
+  uEngine2DAnimation in 'Parts\Animation\uEngine2DAnimation.pas',
+  uEngine2DAnimationList in 'Parts\Animation\uEngine2DAnimationList.pas',
+  uEngine2DSpriteAnimation in 'Parts\Animation\uEngine2DSpriteAnimation.pas',
+  uEngine2DStandardAnimations in 'Parts\Animation\uEngine2DStandardAnimations.pas',
+  uSoAnimation in 'Parts\Animation\uSoAnimation.pas',
+  uSoAnimator in 'Parts\Animation\uSoAnimator.pas',
+  uEngineFormatter in 'Parts\Formatters\uEngineFormatter.pas',
+  uFormatterList in 'Parts\Formatters\uFormatterList.pas',
+  uSoKeyHandler in 'Parts\InputProcessor\uSoKeyHandler.pas',
+  uSoMouseHandler in 'Parts\InputProcessor\uSoMouseHandler.pas',
+  uEngine2DObject in 'Parts\Object_Deprecated\uEngine2DObject.pas',
+  uEngine2DResources in 'Parts\Object_Deprecated\uEngine2DResources.pas',
+  uEngine2DShape in 'Parts\Object_Deprecated\uEngine2DShape.pas',
+  uEngine2DSprite in 'Parts\Object_Deprecated\uEngine2DSprite.pas',
+  uEngine2DText in 'Parts\Object_Deprecated\uEngine2DText.pas',
+  uEngine2DUnclickableObject in 'Parts\Object_Deprecated\uEngine2DUnclickableObject.pas',
+  uSpriteList in 'Parts\Object_Deprecated\uSpriteList.pas',
+  uE2DResource in 'Parts\Rendition\uE2DResource.pas',
+  uE2DShape in 'Parts\Rendition\uE2DShape.pas',
+  uE2DSprite in 'Parts\Rendition\uE2DSprite.pas',
+  uE2DText in 'Parts\Rendition\uE2DText.pas',
+  uEngine2DModel in 'Main\uEngine2DModel.pas',
+  uSoObject in 'Template\uSoObject.pas',
+  uE2DResourceList in 'Parts\Rendition\uE2DResourceList.pas',
+  uCommonClasses in 'Common\uCommonClasses.pas',
+  uSoBasePart in 'Parts\Base\uSoBasePart.pas',
+  uE2DRendition in 'Parts\Rendition\uE2DRendition.pas',
+  uSoEngine in 'Main\uSoEngine.pas',
+  uSoModel in 'Main\uSoModel.pas',
+  uSoObjectKeeper in 'Template\uSoObjectKeeper.pas',
+  uSoRenderer in 'Parts\Rendition\uSoRenderer.pas',
+  uSoBaseOperator in 'Parts\Base\uSoBaseOperator.pas',
+  uSoFormattor in 'Parts\Formatters\uSoFormattor.pas',
+  uSoKeyProcessor in 'Parts\InputProcessor\uSoKeyProcessor.pas',
+  uSoMouseProcessor in 'Parts\InputProcessor\uSoMouseProcessor.pas',
+  uSoLogic in 'Parts\Logic\uSoLogic.pas',
+  uSoLogicKeeper in 'Parts\Logic\uSoLogicKeeper.pas',
+  uSoFormatter in 'Parts\Formatters\uSoFormatter.pas',
+  SimpleIoC in 'Utils\SimpleIoC.pas',
+  uWorldManager in 'Manager\uWorldManager.pas',
+  uUnitManager in 'Manager\uUnitManager.pas',
+  uTemplateManager in 'Manager\uTemplateManager.pas',
+  uWorldStatus in 'Manager\uWorldStatus.pas',
+  uSoContainerKeeper in 'Parts\ContainerKeeper\uSoContainerKeeper.pas',
+  uSoContainer in 'Parts\ContainerKeeper\uSoContainer.pas',
+  uSoContainerTypes in 'Parts\ContainerKeeper\uSoContainerTypes.pas',
+  uSoProperties in 'Parts\Properties\uSoProperties.pas',
+  uSoProperty in 'Parts\Properties\uSoProperty.pas',
+  uSoPropertyKeeper in 'Parts\Properties\uSoPropertyKeeper.pas',
+  uSoFormatterDirective in 'Parts\Formatters\uSoFormatterDirective.pas',
+  uSoConstantGroup in 'SoExpressionParser\uSoConstantGroup.pas',
+  uSoExpressionParser in 'SoExpressionParser\uSoExpressionParser.pas',
+  uSoFastFields in 'SoExpressionParser\uSoFastFields.pas',
+  uSoFunctionGroup in 'SoExpressionParser\uSoFunctionGroup.pas',
+  uSoOperandGroup in 'SoExpressionParser\uSoOperandGroup.pas',
+  uSoParserValue in 'SoExpressionParser\uSoParserValue.pas',
+  uSoRenditionTemplate in 'Parts\Rendition\uSoRenditionTemplate.pas',
+  uSoTypes in 'Common\uSoTypes.pas',
+  uJsonUtils in 'Common\uJsonUtils.pas',
+  uSoSprite in 'Parts\Rendition\uSoSprite.pas',
+  uSoObjectDefaultProperties in 'Common\uSoObjectDefaultProperties.pas',
+  uSoManager in 'Manager\uSoManager.pas',
+  uSoMouseHandleCheckers in 'Parts\InputProcessor\uSoMouseHandleCheckers.pas',
+  uSoEngineEvents in 'Main\uSoEngineEvents.pas',
+  uSoSoundKeeper in 'Parts\Sound\uSoSoundKeeper.pas',
+  uGameAudioManager in 'Parts\Sound\uGameAudioManager.pas',
+  uSoCollider in 'Parts\Collider\uSoCollider.pas',
+  uSoColliderObject in 'Parts\Collider\uSoColliderObject.pas',
+  uSoColliderTemplate in 'Parts\Collider\uSoColliderTemplate.pas',
+  uSoColliderTypes in 'Parts\Collider\uSoColliderTypes.pas',
+  uSoSound in 'Parts\Sound\uSoSound.pas',
+  UPhysics2D in 'Parts\Collider\SoBox2D\Box2D\UPhysics2D.pas',
+  UPhysics2DControllers in 'Parts\Collider\SoBox2D\Box2D\UPhysics2DControllers.pas',
+  UPhysics2DHelper in 'Parts\Collider\SoBox2D\Box2D\UPhysics2DHelper.pas',
+  UPhysics2DPolygonTool in 'Parts\Collider\SoBox2D\Box2D\UPhysics2DPolygonTool.pas',
+  UPhysics2DTypes in 'Parts\Collider\SoBox2D\Box2D\UPhysics2DTypes.pas',
+  uXCadencer in 'Parts\Collider\SoBox2D\Box2D\uXCadencer.pas',
+  uSoBox2DColliderObj in 'Parts\Collider\SoBox2D\uSoBox2DColliderObj.pas',
+  uSoBox2DListener in 'Parts\Collider\SoBox2D\uSoBox2DListener.pas',
+  uSoBox2DExtender in 'Parts\Collider\SoBox2D\uSoBox2DExtender.pas',
+  uEngine2DObjectShape in 'Parts\Collider\NewShapeCollider\uEngine2DObjectShape.pas',
+  uIntersectorMethods in 'Parts\Collider\NewShapeCollider\uIntersectorMethods.pas',
+  uNewFigure in 'Parts\Collider\NewShapeCollider\uNewFigure.pas',
+  uSoBox2DUtils in 'Parts\Collider\SoBox2D\uSoBox2DUtils.pas',
+  uSoColliderExtender in 'Parts\Collider\uSoColliderExtender.pas',
+  uSoColliderOptions in 'Parts\Collider\uSoColliderOptions.pas',
+  uSoColliderObjectTypes in 'Parts\Collider\uSoColliderObjectTypes.pas',
+  uColliderDefinition in 'Parts\Collider\uColliderDefinition.pas',
+  uRawShapes in 'Common\RawShapes\uRawShapes.pas',
+  uRawShapeBaseConverter in 'Common\RawShapes\Converters\uRawShapeBaseConverter.pas',
+  uRawShapeJsonConverter in 'Common\RawShapes\Converters\uRawShapeJsonConverter.pas',
+  uRawShapeBox2DConverter in 'Common\RawShapes\Converters\uRawShapeBox2DConverter.pas',
+  uRawShapeNewFigureConverter in 'Common\RawShapes\Converters\uRawShapeNewFigureConverter.pas',
+  uSoEngineOptions in 'Main\uSoEngineOptions.pas',
+  uSoColliderExtenderFactory in 'Parts\Collider\uSoColliderExtenderFactory.pas',
+  uSoText in 'Parts\Rendition\uSoText.pas';
+
+end.
+

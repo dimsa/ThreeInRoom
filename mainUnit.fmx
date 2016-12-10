@@ -1,0 +1,26 @@
+object mainForm: TmainForm
+  Left = 0
+  Top = 0
+  Caption = 'Asteroids vs You'
+  ClientHeight = 683
+  ClientWidth = 388
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
+  OnResize = FormResize
+  DesignerMasterStyle = 0
+  object mainImage: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Align = Client
+    DisableInterpolation = True
+    Size.Width = 388.000000000000000000
+    Size.Height = 683.000000000000000000
+    Size.PlatformDefault = False
+    WrapMode = Stretch
+  end
+end
