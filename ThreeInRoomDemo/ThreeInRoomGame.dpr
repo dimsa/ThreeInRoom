@@ -12,7 +12,8 @@ uses
   uLogicAssets in 'Other\uLogicAssets.pas',
   uAcceleration in 'Other\uAcceleration.pas',
   uModelClasses in 'Model\uModelClasses.pas',
-  uModelPerson in 'Model\uModelPerson.pas';
+  uModelPerson in 'Model\uModelPerson.pas',
+  uModelHero in 'Model\uModelHero.pas';
 
 {$R *.res}
 

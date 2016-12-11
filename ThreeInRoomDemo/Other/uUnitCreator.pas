@@ -3,8 +3,10 @@ unit uUnitCreator;
 interface
 
 uses
+  System.SysUtils,
   uSoTypes, uGeometryClasses,
-  uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson;
+  uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson,
+  uModelHero;
 
 type
   TGameUnitFriend = class(TGameUnit);
@@ -28,6 +30,10 @@ type
     function NewWindowSill: TWindowSill;
     function NewSpaghetti: TSpaghetti;
     function NewArkadiy: TArkadiy;
+
+    function NewHero(const AName: string): THeroIcon; overload;
+    function NewHero(const ANumber: Integer): THeroIcon; overload;
+
     constructor Create(const AUnitManager: TUnitManager);
   end;
 
@@ -66,6 +72,30 @@ end;
 function TUnitCreator.NewGnome: TGnome;
 begin
   Result := TGnome.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewHero(const ANumber: Integer): THeroIcon;
+begin
+  case ANumber of
+    0: Result := NewHero('Ty');
+    1: Result := NewHero('Ri');
+    2: Result := NewHero('On');
+  end;
+end;
+
+function TUnitCreator.NewHero(const AName: string): THeroIcon;
+begin
+  if LowerCase(AName) = 'ty' then
+    Result := TTyHero.Create(FUnitManager);
+
+  if LowerCase(AName) = 'ri' then
+    Result := TRiHero.Create(FUnitManager);
+
+  if LowerCase(AName) = 'on' then
+    Result := TOnHero.Create(FUnitManager);
+
+  if LowerCase(AName) = 'arkadiy' then
+    Result := TArkadiyHero.Create(FUnitManager);
 end;
 
 function TUnitCreator.NewLamp: TLamp;

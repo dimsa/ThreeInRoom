@@ -5,7 +5,7 @@ interface
 uses
   System.Generics.Collections,
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
-  uUtils, uModel, uSoManager, uSoObject, uModelPerson;
+  uUtils, uModel, uSoManager, uSoObject, uModelPerson, uModelHero;
 
 type
   TGame = class
@@ -19,6 +19,7 @@ type
     FGnomes: TList<TGnome>;
     FActiveGnome: TGnome;
     FWorld: TSoObject;
+    FIcons: TDict<TGameUnit, THeroIcon>;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -39,6 +40,7 @@ constructor TGame.Create(const AManager: TSoManager);
 begin
 
   FGnomes := TList<TGnome>.Create;
+  FIcons := TDict<TGameUnit, THeroIcon>.Create;
 
   FManager := AManager;
 
@@ -70,12 +72,24 @@ end;
 destructor TGame.Destroy;
 begin
   FGnomes.Free;
+  FIcons.Free;
   inherited;
 end;
 
 procedure TGame.OnActivateGnome(ASender: TObject);
+var
+  vUnit: TGameUnit;
 begin
   FActiveGnome := TGnome(ASender);
+
+  for vUnit in FIcons.Keys  do
+  begin
+    if vUnit <> FActiveGnome then
+      FIcons[vUnit].Hide
+    else
+      FIcons[vUnit].Show;
+  end;
+
 end;
 
 procedure TGame.OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -101,6 +115,7 @@ procedure TGame.OnResize(ASender: TObject);
 var
   vScale: Single;
   i: Integer;
+  vUnit: TGameUnit;
 begin
 
   vScale := FWorld.Height / 1024;
@@ -111,6 +126,11 @@ begin
   begin
     FObjects[i].Scale(vScale);
     FObjects[i].Resize;
+  end;
+
+  for vUnit in FIcons.Values do
+  begin
+    vUnit.Scale(vScale);
   end;
 end;
 
@@ -198,6 +218,9 @@ begin
   begin
     FObjects.Add(FGnomes[i]);
     FGnomes[i].Activated := OnActivateGnome;
+    FIcons.Add(FGnomes[i], FUnitCreator.NewHero(i));
+    FIcons[FGnomes[i]].MoveTo(3, -9);
+    FIcons[FGnomes[i]].Hide;
   end;
   OnResize(nil);
 

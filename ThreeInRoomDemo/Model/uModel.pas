@@ -22,6 +22,8 @@ type
     procedure Scale(const AScale: Single);
     procedure Resize; virtual;
     procedure MoveTo(const AX, AY: Integer);
+    procedure Show;
+    procedure Hide;
     function Rect: TRectF;
     procedure PreventOverlapFor(const AUnit: TGameUnit);
     function GetVisualPosition: Single;
@@ -120,6 +122,11 @@ begin
   FContainer[Rendition].Val<TEngine2DRendition>.SendToFront;//.BringToBack;//;
 end;
 
+procedure TGameUnit.Show;
+begin
+  FContainer[Rendition].Val<TEngine2DRendition>.Enabled := True;
+end;
+
 constructor TGameUnit.Create(const AManager: TUnitManager);
 begin
   FManager := AManager;
@@ -134,6 +141,11 @@ end;
 function TGameUnit.Height: Single;
 begin
   Result := FContainer.Height;
+end;
+
+procedure TGameUnit.Hide;
+begin
+  FContainer[Rendition].Val<TEngine2DRendition>.Enabled := False;
 end;
 
 procedure TGameUnit.Init;

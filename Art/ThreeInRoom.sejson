@@ -641,6 +641,14 @@
 			"Margin": "0,0",
 			"Resources": ["On1", "On2", "On3", "On4", "On5", "On6", "On7", "On8"]
 		}
+	},{
+		"Name": "SelectedHero",
+		"Type": "Sprite",
+
+		"Body": {
+			"Margin": "0,0",
+			"Resources": ["TyHero", "RiHero", "OnHero", "ArkadiyHero"]
+		}
 	},
 	
 	{
