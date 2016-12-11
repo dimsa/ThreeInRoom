@@ -20,6 +20,16 @@ type
     property Y: Single read GetY write SetY;
   end;
 
+  TActivator = class
+  private
+    FOnActivate: TNotifyEvent;
+  //  FSender: TObject;
+  public
+    property OnActivate: TNotifyEvent read FOnActivate write FOnActivate;
+    procedure Activate;
+    constructor Create;//(ASender: Tobject);
+  end;
+
 implementation
 
 { TDestination }
@@ -47,6 +57,24 @@ end;
 procedure TDestination.SetY(const Value: Single);
 begin
   FValue.Y := Value;
+end;
+
+{ TActivator }
+
+procedure TActivator.Activate;
+begin
+  if Assigned(FOnActivate) then
+    FOnActivate(Self);
+end;
+
+{constructor TActivator.Create(ASender: Tobject);
+begin
+  FSender := ASender;
+end;  }
+
+constructor TActivator.Create;
+begin
+
 end;
 
 end.

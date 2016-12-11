@@ -34,7 +34,7 @@ begin
   vR2 := vR1.Multiply(ASender.ScalePoint);
   vR3 := vR2.Move(ASender.Center);
   Result := vR3.Contains(APoint); }
-  ASender[RenditionRect].Val<TRectObject>.Rect.Multiply(ASender.ScalePoint).Move(ASender.Center).Contains(APoint);
+  Result :=  ASender[RenditionRect].Val<TRectObject>.Rect.Multiply(ASender.ScalePoint).Move(ASender.Center).Contains(APoint);
 end;
 
 end.

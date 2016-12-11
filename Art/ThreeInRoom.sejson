@@ -615,7 +615,17 @@
 			"Type": "Dynamic"
 		}
 	}],
-	"Templates": [{
+	"Templates": [
+{
+		"Name": "Ty",
+		"Type": "Sprite",
+
+		"Body": {
+			"Margin": "0,0",
+			"Resources": ["Ty1", "Ty2", "Ty3", "Ty4", "Ty5", "Ty6", "Ty7", "Ty8"]
+		}
+	},
+	{
 		"Name": "Ri",
 		"Type": "Sprite",
 
@@ -624,6 +634,16 @@
 			"Resources": ["Ri1", "Ri2", "Ri3", "Ri4", "Ri5", "Ri6", "Ri7", "Ri8"]
 		}
 	}, {
+		"Name": "On",
+		"Type": "Sprite",
+
+		"Body": {
+			"Margin": "0,0",
+			"Resources": ["On1", "On2", "On3", "On4", "On5", "On6", "On7", "On8"]
+		}
+	},
+	
+	{
 		"Name": "Room",
 		"Type": "Sprite",
 

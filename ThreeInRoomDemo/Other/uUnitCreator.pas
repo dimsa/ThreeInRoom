@@ -12,6 +12,7 @@ type
   TUnitCreator = class
   private
     FUnitManager: TUnitManager;
+    function NewGnome: TGnome;
   public
     function NewRoom: TRoom;
     function NewBed: TBed;
@@ -21,7 +22,9 @@ type
     function NewTable: TTable;
     function NewLocker: TLocker;
     function NewLamp: TLamp;
-    function NewGnome: TGnome;
+    function NewTy: TGnome;
+    function NewRi: TGnome;
+    function NewOn: TGnome;
     constructor Create(const AUnitManager: TUnitManager);
   end;
 
@@ -67,6 +70,16 @@ begin
   Result := TLocker.Create(FUnitManager);
 end;
 
+function TUnitCreator.NewOn: TGnome;
+begin
+  Result := TOn.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewRi: TGnome;
+begin
+  Result := TRi.Create(FUnitManager);
+end;
+
 function TUnitCreator.NewRoom: TRoom;
 begin
   Result := TRoom.Create(FUnitManager);
@@ -80,6 +93,11 @@ end;
 function TUnitCreator.NewTabouret: TTabouret;
 begin
   Result := TTabouret.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewTy: TGnome;
+begin
+  Result := TTy.Create(FUnitManager);
 end;
 
 end.

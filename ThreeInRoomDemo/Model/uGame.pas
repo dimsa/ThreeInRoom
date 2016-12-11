@@ -16,13 +16,15 @@ type
     FManager: TSoManager;
     FRoom: TRoom;
     FMouseDowned: Boolean;
-    FGnome: TGnome;
+    FGnomes: TList<TGnome>;
+    FActiveGnome: TGnome;
     FWorld: TSoObject;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
     procedure OnMouseUp(Sender: TObject; AEventArgs: TMouseEventArgs);
     procedure OnMouseMove(Sender: TObject; AEventArgs: TMouseMoveEventArgs);
+    procedure OnActivateGnome(ASender: TObject);
     procedure SortSprites(ASoObject: TSoObject);
   public
     constructor Create(const AManager: TSoManager);
@@ -35,6 +37,9 @@ implementation
 
 constructor TGame.Create(const AManager: TSoManager);
 begin
+
+  FGnomes := TList<TGnome>.Create;
+
   FManager := AManager;
 
   with FManager do begin
@@ -64,24 +69,31 @@ end;
 
 destructor TGame.Destroy;
 begin
-
+  FGnomes.Free;
   inherited;
+end;
+
+procedure TGame.OnActivateGnome(ASender: TObject);
+begin
+  FActiveGnome := TGnome(ASender);
 end;
 
 procedure TGame.OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
 begin
   FMouseDowned := True;
-  FGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
 end;
 
 procedure TGame.OnMouseMove(Sender: TObject; AEventArgs: TMouseMoveEventArgs);
 begin
-  if FMouseDowned then
-    FGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
+{  if FMouseDowned then
+    if FActiveGnome <> nil then
+      FActiveGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y)); }
 end;
 
 procedure TGame.OnMouseUp(Sender: TObject; AEventArgs: TMouseEventArgs);
 begin
+  if FActiveGnome <> nil then
+    FActiveGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
   FMouseDowned := False;
 end;
 
@@ -140,8 +152,8 @@ begin
   begin
     FObjects[vArr[i].Key].SendToFront;
 
-    if FObjects[vArr[i].Key] <> FGnome then
-      FObjects[vArr[i].Key].PreventOverlapFor(FGnome);
+    if (not (FObjects[vArr[i].Key] is TGnome)) and (FActiveGnome <> nil) then
+      FObjects[vArr[i].Key].PreventOverlapFor(FActiveGnome);
   end;
 
 end;
@@ -169,9 +181,16 @@ begin
   FObjects.Last.MoveTo(8, 1);
   FObjects.Add(FUnitCreator.NewLamp);
   FObjects.Last.MoveTo(4, 2);
-  FGnome := FUnitCreator.NewGnome;
-  FObjects.Add(FGnome);
 
+  FGnomes.Add(FUnitCreator.NewTy);
+  FGnomes.Add(FUnitCreator.NewRi);
+  FGnomes.Add(FUnitCreator.NewOn);
+
+  for i := 0 to FGnomes.Count - 1 do
+  begin
+    FObjects.Add(FGnomes[i]);
+    FGnomes[i].Activated := OnActivateGnome;
+  end;
   OnResize(nil);
 
 end;

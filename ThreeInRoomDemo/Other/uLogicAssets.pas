@@ -17,6 +17,7 @@ type
     class procedure MovingThroughSidesInner(ASoObject, AWorld: TSoObject);
   public
     class procedure OnTestMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
+    class procedure OnGnomeLongPress(Sender: TObject);
     //(Sender: TObject; AEventArgs: TMouseEventArgs);
     class procedure MovingThroughSides(ASoObject: TSoObject);
     class procedure MovingByAcceleration(ASoObject: TSoObject);
@@ -170,13 +171,20 @@ begin
  // TSoColliderObj(ASender).Subject[Sound].Val<TSoSound>.Play;
 end;
 
+class procedure TLogicAssets.OnGnomeLongPress(Sender: TObject);
+var
+  vObj: TSoObject;
+begin
+  vObj := TSoMouseHandler(Sender).Subject;
+  vObj['Activator'].Val<TActivator>.Activate;
+end;
+
 class procedure TLogicAssets.OnTestMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
 var
   vObj: TSoObject;
 begin
   vObj := TSoMouseHandler(Sender).Subject;
-
-  vObj.Properties[Collider].Val<TSoColliderObj>.ApplyForce((Random - 0.5) * 1000, (Random - 0.5) * 1000);
+ // vObj['Activator'].Val<TActivator>.Activate;
 end;
 
 end.
