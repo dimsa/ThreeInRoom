@@ -12,6 +12,7 @@ type
   protected
     FContainer: TSoObject;
     FManager: TUnitManager;
+    FRect: TRectObject;
     procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
     function Margin: TPointF; virtual;
@@ -21,6 +22,7 @@ type
     procedure Scale(const AScale: Single);
     procedure Resize; virtual;
     procedure MoveTo(const AX, AY: Integer);
+    function Rect: TRectF;
     procedure PreventOverlapFor(const AUnit: TGameUnit);
     function GetVisualPosition: Single;
     procedure SendToFront;
@@ -91,14 +93,6 @@ type
     procedure Init; override;
   end;
 
-  TGnome =  class(TGameUnit)
-  private
-    FDestination: TDestination;
-  public
-    procedure AddDestination(const APoint: TPointF);
-    procedure Init; override;
-  end;
-
 implementation
 
 uses
@@ -160,14 +154,33 @@ begin
 end;
 
 procedure TGameUnit.PreventOverlapFor(const AUnit: TGameUnit);
+var
+  vRend1, vRend2: TEngine2DRendition;
 begin
-
+  if GetVisualPosition > AUnit.GetVisualPosition then
+  begin
+    if Self.Rect.IntersectsWith(AUnit.Rect) then
+    begin
+      FContainer[Rendition].Val<TEngine2DRendition>.Opacity := 0.6;
+      Exit;
+    end;
+  end;
+  FContainer[Rendition].Val<TEngine2DRendition>.Opacity := 1;//.BringToBack;//;
 end;
 
 procedure TGameUnit.RandomizePosition(const ASubject: TSoObject);
 begin
   ASubject.X := Random(Round(FManager.ObjectByName('World').Width));
   ASubject.Y := Random(Round(FManager.ObjectByName('World').Height));
+end;
+
+function TGameUnit.Rect: TRectF;
+begin
+  if FRect = nil then
+    FRect := FContainer[Rendition].Val<TEngine2DRendition>.Rect;
+
+  Result := FRect.Rect.Multiply(FContainer.ScalePoint);
+  Result.Offset(FContainer.Center);
 end;
 
 procedure TGameUnit.Resize;
@@ -274,34 +287,6 @@ begin
   end;
 
   RandomizePosition(FContainer);
-end;
-
-{ TGnome }
-
-procedure TGnome.AddDestination(const APoint: TPointF);
-begin
-  FDestination.Value := APoint;
-end;
-
-procedure TGnome.Init;
-var
-  vName: string;
-begin
-  inherited;
-  vName := 'Gnome';
-  FDestination := TDestination.Create;
-  with FManager.ByObject(FContainer) do begin
-    AddRendition(vName);
-    with AddColliderObj('Gnome1') do
-    begin
-      AddOnBeginContactHandler(TLogicAssets.OnCollideAsteroid);
-    end;
-    AddProperty('Destination', FDestination);
-    AddNewLogic(TLogicAssets.MovingToDestination);
-  end;
-
-  RandomizePosition(FContainer);
-  FDestination.Value := FContainer.Position.XY;
 end;
 
 { TLocker }

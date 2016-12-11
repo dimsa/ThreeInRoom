@@ -4,7 +4,7 @@ interface
 
 uses
   uSoTypes, uGeometryClasses,
-  uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject;
+  uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson;
 
 type
   TGameUnitFriend = class(TGameUnit);

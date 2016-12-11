@@ -144,7 +144,7 @@ begin
       FSubject.Y + FResourceList[FResIndex].HHalf * CJustifyPoints[Justify].Top + FMargin.Y,
       FSubject.X + FResourceList[FResIndex].WHalf * CJustifyPoints[Justify].Right + FMargin.X,
       FSubject.Y + FResourceList[FResIndex].HHalf * CJustifyPoints[Justify].Bottom + FMargin.Y),
-    1,
+    FOpacity,
     True);
 end;
 

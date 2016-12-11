@@ -11,7 +11,8 @@ uses
   uUtils in 'Common\uUtils.pas',
   uLogicAssets in 'Other\uLogicAssets.pas',
   uAcceleration in 'Other\uAcceleration.pas',
-  uModelClasses in 'Model\uModelClasses.pas';
+  uModelClasses in 'Model\uModelClasses.pas',
+  uModelPerson in 'Model\uModelPerson.pas';
 
 {$R *.res}
 

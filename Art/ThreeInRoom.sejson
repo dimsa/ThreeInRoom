@@ -26,49 +26,49 @@
 			"Position": "192,192;224,288"
 		}
 	}, {
-		"Name": "Gnome1",
+		"Name": "Ri1",
 		"Body": {
-			"Position": "224,192;288,288"
+			"Position": "1056,0;1120,96"
 		}
 	}, {
-		"Name": "Gnome2",
+		"Name": "Ri2",
 		"Body": {
-			"Position": "288,192;352,288"
+			"Position": "1056,96;1120,192"
 		}
 	}, {
-		"Name": "Gnome3",
+		"Name": "Ri3",
 		"Body": {
-			"Position": "352,192;416,288"
+			"Position": "1056,192;1120,288"
 		}
 	}, {
-		"Name": "Gnome4",
+		"Name": "Ri4",
 		"Body": {
-			"Position": "288,288;352,384"
+			"Position": "1056,288;1120,384"
 		}
 	}, {
-		"Name": "Gnome5",
+		"Name": "Ri5",
 		"Body": {
-			"Position": "352,288;416,384"
+			"Position": "1056,384;1120,480"
 		}
 	}, {
-		"Name": "Gnome6",
+		"Name": "Ri6",
 		"Body": {
-			"Position": "288,384;352,480"
+			"Position": "1056,480;1120,576"
 		}
 	}, {
-		"Name": "Gnome7",
+		"Name": "Ri7",
 		"Body": {
-			"Position": "352,384;416,480"
+			"Position": "1056,576;1120,672"
 		}
 	}, {
-		"Name": "Gnome8",
+		"Name": "Ri8",
 		"Body": {
-			"Position": "352,480;416,576"
+			"Position": "1056,672;1120,768"
 		}
 	}, {
 		"Name": "LampYellow",
 		"Body": {
-			"Position": "192,288;288,536"
+			"Position": "192,288;288,534"
 		}
 	}, {
 		"Name": "Locker",
@@ -84,6 +84,150 @@
 		"Name": "Room",
 		"Body": {
 			"Position": "416,0;1056,1024"
+		}
+	}, {
+		"Name": "Arkadiy",
+		"Body": {
+			"Position": "320,0;416,269"
+		}
+	}, {
+		"Body": {
+			"Position": "416,0;1056,1024"
+		}
+	}, {
+		"Name": "On1",
+		"Body": {
+			"Position": "1120,0;1184,96"
+		}
+	}, {
+		"Name": "On2",
+		"Body": {
+			"Position": "1120,96;1184,192"
+		}
+	}, {
+		"Name": "On3",
+		"Body": {
+			"Position": "1120,192;1184,288"
+		}
+	}, {
+		"Name": "On4",
+		"Body": {
+			"Position": "1120,288;1184,384"
+		}
+	}, {
+		"Name": "On5",
+		"Body": {
+			"Position": "1120,384;1184,480"
+		}
+	}, {
+		"Name": "On6",
+		"Body": {
+			"Position": "1120,480;1184,576"
+		}
+	}, {
+		"Name": "On7",
+		"Body": {
+			"Position": "1120,576;1184,672"
+		}
+	}, {
+		"Name": "On8",
+		"Body": {
+			"Position": "1120,672;1184,768"
+		}
+	}, {
+		"Name": "Ty1",
+		"Body": {
+			"Position": "1184,0;1248,96"
+		}
+	}, {
+		"Name": "Ty2",
+		"Body": {
+			"Position": "1184,96;1248,192"
+		}
+	}, {
+		"Name": "Ty3",
+		"Body": {
+			"Position": "1184,192;1248,288"
+		}
+	}, {
+		"Name": "Ty4",
+		"Body": {
+			"Position": "1184,288;1248,384"
+		}
+	}, {
+		"Name": "Ty5",
+		"Body": {
+			"Position": "1184,384;1248,480"
+		}
+	}, {
+		"Name": "Ty6",
+		"Body": {
+			"Position": "1184,480;1248,576"
+		}
+	}, {
+		"Name": "Ty7",
+		"Body": {
+			"Position": "1184,576;1248,672"
+		}
+	}, {
+		"Name": "Ty8",
+		"Body": {
+			"Position": "1184,672;1248,768"
+		}
+	}, {
+		"Name": "TyHero",
+		"Body": {
+			"Position": "1248,0;1376,128"
+		}
+	}, {
+		"Name": "RiHero",
+		"Body": {
+			"Position": "1248,128;1376,256"
+		}
+	}, {
+		"Name": "OnHero",
+		"Body": {
+			"Position": "1248,256;1376,384"
+		}
+	}, {
+		"Name": "Windowsill",
+		"Body": {
+			"Position": "288,288;416,528"
+		}
+	}, {
+		"Name": "LampRed",
+		"Body": {
+			"Position": "320,534;416,780"
+		}
+	}, {
+		"Name": "ArkadiyHero",
+		"Body": {
+			"Position": "1248,384;1376,512"
+		}
+	}, {
+		"Name": "Key",
+		"Body": {
+			"Position": "224,192;256,224"
+		}
+	}, {
+		"Name": "Coat",
+		"Body": {
+			"Position": "256,192;288,224"
+		}
+	}, {
+		"Name": "Boots",
+		"Body": {
+			"Position": "288,192;320,224"
+		}
+	}, {
+		"Name": "Spaghetti",
+		"Body": {
+			"Position": "224,224;256,256"
+		}
+	}, {
+		"Name": "Hat",
+		"Body": {
+			"Position": "256,224;288,256"
 		}
 	}],
 	"Colliders": [{
@@ -118,7 +262,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Static"
+			"Type": "Dynamic"
 		}
 	}, {
 		"Name": "Table",
@@ -152,7 +296,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Static"
+			"Type": "Dynamic"
 		}
 	}, {
 		"Name": "Chair",
@@ -245,7 +389,7 @@
 			"Type": "Dynamic"
 		}
 	}, {
-		"Name": "Gnome1",
+		"Name": "Ri1",
 		"Body": {
 			"Fixtures": [{
 				"Type": "Circle",
@@ -282,7 +426,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Static"
+			"Type": "Dynamic"
 		}
 	}, {
 		"Name": "LockerOpened",
@@ -295,14 +439,14 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Static"
+			"Type": "Dynamic"
 		}
 	}, {
 		"Name": "Room",
 		"Body": {
 			"Fixtures": [{
 				"Type": "Poly",
-				"Points": ["-320,-320", "-320,-130", "320,-130", "320,-320"],
+				"Points": ["-317,-146", "-320,-131", "319,-128", "319,-142"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
@@ -329,16 +473,155 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Static"
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Arkadiy",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Poly",
+				"Points": ["-25,88", "-24,131", "26,130", "24,88"],
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "TyHero",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "64",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "RiHero",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "64",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "OnHero",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "64",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "ArkadiyHero",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "64",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Key",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Coat",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Boots",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Spaghetti",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
+		}
+	}, {
+		"Name": "Hat",
+		"Body": {
+			"Fixtures": [{
+				"Type": "Circle",
+				"Center": "0,0",
+				"Radius": "16",
+				"Density": "1",
+				"Friction": "0",
+				"Restitution": "0",
+				"IsSensor": "0"
+			}],
+			"Type": "Dynamic"
 		}
 	}],
 	"Templates": [{
-		"Name": "Gnome",
+		"Name": "Ri",
 		"Type": "Sprite",
 
 		"Body": {
 			"Margin": "0,0",
-			"Resources": ["Gnome1", "Gnome2", "Gnome3", "Gnome4", "Gnome5", "Gnome6", "Gnome7", "Gnome8"]
+			"Resources": ["Ri1", "Ri2", "Ri3", "Ri4", "Ri5", "Ri6", "Ri7", "Ri8"]
 		}
 	}, {
 		"Name": "Room",

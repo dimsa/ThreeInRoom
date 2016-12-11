@@ -3,8 +3,9 @@ unit uGame;
 interface
 
 uses
+  System.Generics.Collections,
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
-  uUtils, uModel, uSoManager, uSoObject, System.Generics.Collections;
+  uUtils, uModel, uSoManager, uSoObject, uModelPerson;
 
 type
   TGame = class
@@ -133,14 +134,15 @@ begin
     vPair := vArr[i];
     vArr[i] := vArr[iMax];
     vArr[iMax] := vPair;
-{    iOld := vIndArr[iMax];
-    vIndArr[i] := vIndArr[iMax];
-    vIndArr[iMax] := i;
-    //FObjects[iMax].SendToFront;  }
   end;
 
   for i := High(vArr) downto 0 do
+  begin
     FObjects[vArr[i].Key].SendToFront;
+
+    if FObjects[vArr[i].Key] <> FGnome then
+      FObjects[vArr[i].Key].PreventOverlapFor(FGnome);
+  end;
 
 end;
 
