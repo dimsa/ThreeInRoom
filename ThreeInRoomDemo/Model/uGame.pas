@@ -85,10 +85,12 @@ begin
 
   vScale := FWorld.Height / 1024;
   FRoom.Scale(vScale);
+  FRoom.Resize;
 
   for i := 0 to FObjects.Count - 1 do
   begin
     FObjects[i].Scale(vScale);
+    FObjects[i].Resize;
   end;
 end;
 
@@ -99,6 +101,7 @@ begin
   Randomize;
 
   FRoom :=  FUnitCreator.NewRoom;
+  FRoom.Scale(FWorld.Height / 1024);
 
   FObjects.Add(FUnitCreator.NewBed);
   FObjects.Last.MoveTo(9, 14);

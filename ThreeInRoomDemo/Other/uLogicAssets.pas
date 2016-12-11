@@ -111,9 +111,7 @@ end;
 
 class procedure TLogicAssets.MovingToDestination(ASoObject: TSoObject);
 var
- // vAcceleration: TAcceleration;
   vDest: TDestination;
-  vAngle, vDir: Single;
   vDx, vDy: Single;
   vIsHere: Boolean;
   vRend: TSoSprite;

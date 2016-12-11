@@ -14,48 +14,67 @@ type
     FManager: TUnitManager;
     procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
+    function Margin: TPointF; virtual;
   public
+    function Height: Single;
+    function Width: Single;
     procedure Scale(const AScale: Single);
+    procedure Resize; virtual;
     procedure MoveTo(const AX, AY: Integer);
     constructor Create(const AManager: TUnitManager); virtual;
   end;
 
+  TRoom = class(TGameUnit)
+  private
+    FCell: TPointF;
+    function Margin: TPointF; override;
+  public
+    procedure Init; override;
+    property Cell: TPointF read FCell;
+    procedure Resize; override;
+  end;
+
   TRoomObject =  class(TGameUnit)
   public
-
+    procedure Init; override;
   end;
 
-  TRoom = class(TGameUnit)
+  TLeftTopRoomObject = class(TRoomObject)
+  private
+    function Margin: TPointF; override;
+  end;
+
+  TLeftBottomRoomObject = class(TRoomObject)
+  private
+    function Margin: TPointF; override;
+  end;
+
+  TBed =  class(TLeftTopRoomObject)
   public
     procedure Init; override;
   end;
 
-  TBed =  class(TRoomObject)
+  TChair =  class(TLeftBottomRoomObject)
   public
     procedure Init; override;
   end;
 
-  TChair =  class(TRoomObject)
+  TTabouret =  class(TLeftBottomRoomObject)
   public
     procedure Init; override;
   end;
 
-  TTabouret =  class(TRoomObject)
+  TCactus =  class(TLeftBottomRoomObject)
   public
     procedure Init; override;
   end;
 
-  TCactus =  class(TRoomObject)
+  TTable =  class(TLeftBottomRoomObject)
   public
     procedure Init; override;
   end;
 
-  TTable =  class(TRoomObject)
-  public
-    procedure Init; override;
-  end;
-
-  TLocker = class(TRoomObject)
+  TLocker = class(TLeftBottomRoomObject)
   private
     FIsOpened: Boolean;
     procedure SetIsOpened(const Value: Boolean);
@@ -64,7 +83,7 @@ type
     property IsOpened: Boolean read FIsOpened write SetIsOpened;
   end;
 
-  TLamp = class(TRoomObject)
+  TLamp = class(TLeftBottomRoomObject)
   public
     procedure Init; override;
   end;
@@ -90,6 +109,11 @@ begin
   Init;
 end;
 
+function TGameUnit.Height: Single;
+begin
+  Result := FContainer.Height;
+end;
+
 procedure TGameUnit.Init;
 begin
   with FManager.New do begin
@@ -98,11 +122,17 @@ begin
   end;
 end;
 
+function TGameUnit.Margin: TPointF;
+begin
+  Result := TPointF.Create(0, 0);
+end;
+
 procedure TGameUnit.MoveTo(const AX, AY: Integer);
 var
   vW, vH, vDw, vDh: Single;
   vWorld: TSoObject;
   vScale: Single;
+  vMarg: TPointF;
 begin
   vWorld := FManager.ObjectByName('World');
   vScale := vWorld.Height / 1024;
@@ -111,8 +141,9 @@ begin
   vDw := vW / 20;
   vDh := vH / 32;
 
-  FContainer.X := vDw * Ax;
-  FContainer.Y := vDh * 12 + vDh * Ay;
+  vMarg := Margin;
+  FContainer.X := vMarg.X + vDw * Ax;
+  FContainer.Y := vMarg.Y + vDh * 12 + vDh * Ay;
 end;
 
 procedure TGameUnit.RandomizePosition(const ASubject: TSoObject);
@@ -121,11 +152,26 @@ begin
   ASubject.Y := Random(Round(FManager.ObjectByName('World').Height));
 end;
 
+procedure TGameUnit.Resize;
+begin
+
+end;
+
 procedure TGameUnit.Scale(const AScale: Single);
+begin
+  FContainer.Scale := AScale;
+end;
+
+{rocedure TGameUnit.Scale(const AScale: Single);
 begin
   FContainer.Scale := AScale;
 //  FContainer.X := FContainer.X * AScale;
 //  FContainer.Y := FContainer.Y * AScale;
+end;  }
+
+function TGameUnit.Width: Single;
+begin
+  Result := FContainer.Width;
 end;
 
 procedure TBed.Init;
@@ -287,15 +333,72 @@ procedure TRoom.Init;
 var
   vName: string;
 begin
-  inherited;
   vName := 'Room';
-  with FManager.ByObject(FContainer) do begin
+
+  with FManager.New(vName) do begin
+    FContainer := ActiveContainer;
     AddRendition(vName);
     AddColliderObj(vName);
   end;
 
   FContainer.X := 0;
   FContainer.Y := 0;
+end;
+
+function TRoom.Margin: TPointF;
+begin
+  Result := TPointF.Create(FContainer.Width * FContainer.ScaleX * 0.5, FContainer.Height * FContainer.ScaleY * 0.5);
+end;
+
+procedure TRoom.Resize;
+begin
+  inherited;
+
+  {vWorld := FManager.ObjectByName('World');
+  vScale := vWorld.Height / 1024;
+  vW := 640 * Abs(vScale);
+  vH := 1024 * Abs(vScale);
+  FCell.X := vW / 20;
+  FCell.Y := vH / 32;   }
+
+  FContainer.Center := Margin;
+end;
+
+
+{ TRoomObject }
+
+procedure TRoomObject.Init;
+var
+  vRoom: TSoObject;
+begin
+  inherited;
+  vRoom := FManager.ByName('Room').ActiveContainer;
+  with FManager.ByObject(FContainer) do
+    AddProperty('Room', vRoom);
+end;
+
+{ TLeftTopRoomObject }
+
+function TLeftTopRoomObject.Margin: TPointF;
+var
+  vRoom: TSoObject;
+begin
+  vRoom := FContainer['Room'].Val<TSoObject>;
+  Result := TPointF.Create(FContainer.Width * vRoom.ScaleX * 0.5, FContainer.Height * vRoom.ScaleY * 0.5);
+end;
+
+{ TLeftBottomRoomObject }
+
+function TLeftBottomRoomObject.Margin: TPointF;
+var
+  vRoom: TSoObject;
+  vD: Single;
+begin
+  vRoom := FContainer['Room'].Val<TSoObject>;
+  vD := (vRoom.Height * vRoom.ScaleX) / 32;
+  Result := TPointF.Create(
+    FContainer.Width * vRoom.ScaleX * 0.5,
+    -FContainer.Height * vRoom.ScaleY * 0.5);
 end;
 
 end.

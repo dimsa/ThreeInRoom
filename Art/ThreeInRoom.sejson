@@ -118,7 +118,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Table",
@@ -152,7 +152,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Chair",
@@ -282,7 +282,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "LockerOpened",
@@ -295,14 +295,14 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Room",
 		"Body": {
 			"Fixtures": [{
 				"Type": "Poly",
-				"Points": ["-317,-146", "-320,-131", "319,-128", "319,-142"],
+				"Points": ["-320,-320", "-320,-130", "320,-130", "320,-320"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
@@ -337,7 +337,7 @@
 		"Type": "Sprite",
 
 		"Body": {
-			"Margin": "0,-42",
+			"Margin": "0,0",
 			"Resources": ["Gnome1", "Gnome2", "Gnome3", "Gnome4", "Gnome5", "Gnome6", "Gnome7", "Gnome8"]
 		}
 	}, {
@@ -345,61 +345,53 @@
 		"Type": "Sprite",
 
 		"Body": {
-			"Resources": ["Room"],
-			"Justify": "TopLeft"
+			"Resources": ["Room"]
 		}
 	}, {
 		"Name": "Bed",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Bed"],
-			"Justify": "BottomRight"
+			"Resources": ["Bed"]
 		}
 	},{
 		"Name": "Locker",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Locker"],
-			"Justify": "TopCenter"
+			"Resources": ["Locker"]
 		}
 	},
 	{
 		"Name": "LampYellow",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["LampYellow"],
-			"Justify": "TopCenter"
+			"Resources": ["LampYellow"]
 		}
 	},{
 		"Name": "Table",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Table"],
-			"Justify": "TopRight"
+			"Resources": ["Table"]
 		}
 	},
 	{
 		"Name": "Chair",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Chair"],
-			"Justify": "BottomRight"
+			"Resources": ["Chair"]
 		}
 	},
 	{
 		"Name": "Tabouret",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Tabouret"],
-			"Justify": "BottomRight"
+			"Resources": ["Tabouret"]
 		}
 	},
 	{
 		"Name": "Cactus",
 		"Type": "Sprite",
 		"Body": {
-			"Resources": ["Cactus"],
-			"Justify": "BottomRight"
+			"Resources": ["Cactus"]
 		}
 	}
 	]
