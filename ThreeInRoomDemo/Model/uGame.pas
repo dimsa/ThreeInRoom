@@ -4,7 +4,7 @@ interface
 
 uses
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
-  uUtils, uModel, uSoManager, uSoObject;
+  uUtils, uModel, uSoManager, uSoObject, System.Generics.Collections;
 
 type
   TGame = class
@@ -22,6 +22,7 @@ type
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
     procedure OnMouseUp(Sender: TObject; AEventArgs: TMouseEventArgs);
     procedure OnMouseMove(Sender: TObject; AEventArgs: TMouseMoveEventArgs);
+    procedure SortSprites(ASoObject: TSoObject);
   public
     constructor Create(const AManager: TSoManager);
     destructor Destroy; override;
@@ -50,7 +51,13 @@ begin
     WorldManager.OnMouseMove.Add(OnMouseMove);
 
     FWorld := UnitManager.ByName('World').ActiveContainer;
+
     StartGame;
+  end;
+
+  with FManager.UnitManager.ByObject(FWorld) do
+  begin
+    AddNewLogic(SortSprites);
   end;
 end;
 
@@ -92,6 +99,49 @@ begin
     FObjects[i].Scale(vScale);
     FObjects[i].Resize;
   end;
+end;
+
+procedure TGame.SortSprites(ASoObject: TSoObject);
+var
+  i, j, iMax: Integer;
+
+//  vIndArr: TArray<Integer>;
+  vMax: Single;
+  iOld: Integer;
+  vPair: TPair<Integer,Single>;
+  vArr: TArray<TPair<Integer,Single>>;
+begin
+  SetLength(vArr, FObjects.Count);
+
+  for i := 0 to FObjects.Count - 1 do
+  begin
+    vArr[i].Key := i;
+    vArr[i].Value := FObjects[i].GetVisualPosition;
+  end;
+
+  for i := 0 to High(vArr) do
+  begin
+    vMax := vArr[i].Value;
+    iMax := i;//vArr[i].Key;
+    for j := i + 1 to High(vArr) do
+      if vArr[j].Value > vMax then
+      begin
+        iMax := j;
+        vMax := vArr[j].Value;
+      end;
+
+    vPair := vArr[i];
+    vArr[i] := vArr[iMax];
+    vArr[iMax] := vPair;
+{    iOld := vIndArr[iMax];
+    vIndArr[i] := vIndArr[iMax];
+    vIndArr[iMax] := i;
+    //FObjects[iMax].SendToFront;  }
+  end;
+
+  for i := High(vArr) downto 0 do
+    FObjects[vArr[i].Key].SendToFront;
+
 end;
 
 procedure TGame.StartGame;

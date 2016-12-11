@@ -21,6 +21,9 @@ type
     procedure Scale(const AScale: Single);
     procedure Resize; virtual;
     procedure MoveTo(const AX, AY: Integer);
+    procedure PreventOverlapFor(const AUnit: TGameUnit);
+    function GetVisualPosition: Single;
+    procedure SendToFront;
     constructor Create(const AManager: TUnitManager); virtual;
   end;
 
@@ -99,14 +102,24 @@ type
 implementation
 
 uses
-  uSoSprite, uUtils, uSoSound, uSoColliderObject;
+  uSoSprite, uUtils, uSoSound, uSoColliderObject, uE2DRendition;
 
 { TGameUnit }
+
+procedure TGameUnit.SendToFront;
+begin
+  FContainer[Rendition].Val<TEngine2DRendition>.SendToFront;//.BringToBack;//;
+end;
 
 constructor TGameUnit.Create(const AManager: TUnitManager);
 begin
   FManager := AManager;
   Init;
+end;
+
+function TGameUnit.GetVisualPosition: Single;
+begin
+  Result := FContainer.Y + (FContainer.Height / 2) * FContainer.ScaleY;
 end;
 
 function TGameUnit.Height: Single;
@@ -144,6 +157,11 @@ begin
   vMarg := Margin;
   FContainer.X := vMarg.X + vDw * Ax;
   FContainer.Y := vMarg.Y + vDh * 12 + vDh * Ay;
+end;
+
+procedure TGameUnit.PreventOverlapFor(const AUnit: TGameUnit);
+begin
+
 end;
 
 procedure TGameUnit.RandomizePosition(const ASubject: TSoObject);

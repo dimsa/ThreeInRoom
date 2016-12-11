@@ -140,6 +140,8 @@ end;
 
 procedure TSoRenderer.BringToBack(ASender: TObject);
 begin
+{  FList.Delete(TEngine2DRendition(ASender));
+  FList.Insert(0, TEngine2DRendition(ASender)); }
   FList.Move(FList.IndexOf(TEngine2DRendition(ASender)), 0);
 end;
 
@@ -277,6 +279,8 @@ end;}
 
 procedure TSoRenderer.SendToFront(ASender: TObject);
 begin
+  {FList.Delete(TEngine2DRendition(ASender));
+  FList.Add(TEngine2DRendition(ASender));   }
   FList.Move(FList.IndexOf(TEngine2DRendition(ASender)), FList.Count - 1);
 end;
 
