@@ -182,6 +182,14 @@ begin
   FObjects.Add(FUnitCreator.NewLamp);
   FObjects.Last.MoveTo(4, 2);
 
+  FObjects.Add(FUnitCreator.NewWindowSill);
+  FObjects.Last.MoveTo(17, 4);
+  FObjects.Add(FUnitCreator.NewSpaghetti);
+  FObjects.Last.MoveTo(4, 6);
+  FObjects.Add(FUnitCreator.NewArkadiy);
+  FObjects.Last.MoveTo(16, 1);
+
+
   FGnomes.Add(FUnitCreator.NewTy);
   FGnomes.Add(FUnitCreator.NewRi);
   FGnomes.Add(FUnitCreator.NewOn);

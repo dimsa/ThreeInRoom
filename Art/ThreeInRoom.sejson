@@ -262,7 +262,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Table",
@@ -296,7 +296,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Chair",
@@ -426,7 +426,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "LockerOpened",
@@ -473,7 +473,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Arkadiy",
@@ -500,7 +500,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "RiHero",
@@ -514,7 +514,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "OnHero",
@@ -528,7 +528,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "ArkadiyHero",
@@ -542,7 +542,7 @@
 				"Restitution": "0",
 				"IsSensor": "0"
 			}],
-			"Type": "Dynamic"
+			"Type": "Static"
 		}
 	}, {
 		"Name": "Key",

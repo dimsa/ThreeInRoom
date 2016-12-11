@@ -25,6 +25,9 @@ type
     function NewTy: TGnome;
     function NewRi: TGnome;
     function NewOn: TGnome;
+    function NewWindowSill: TWindowSill;
+    function NewSpaghetti: TSpaghetti;
+    function NewArkadiy: TArkadiy;
     constructor Create(const AUnitManager: TUnitManager);
   end;
 
@@ -38,6 +41,11 @@ uses
 constructor TUnitCreator.Create(const AUnitManager: TUnitManager);
 begin
   FUnitManager := AUnitManager;
+end;
+
+function TUnitCreator.NewArkadiy: TArkadiy;
+begin
+  Result := TArkadiy.Create(FUnitManager);
 end;
 
 function TUnitCreator.NewBed: TBed;
@@ -85,6 +93,11 @@ begin
   Result := TRoom.Create(FUnitManager);
 end;
 
+function TUnitCreator.NewSpaghetti: TSpaghetti;
+begin
+  Result := TSpaghetti.Create(FUnitManager);
+end;
+
 function TUnitCreator.NewTable: TTable;
 begin
   Result := TTable.Create(FUnitManager);
@@ -98,6 +111,11 @@ end;
 function TUnitCreator.NewTy: TGnome;
 begin
   Result := TTy.Create(FUnitManager);
+end;
+
+function TUnitCreator.NewWindowSill: TWindowSill;
+begin
+  Result := TWindowSill.Create(FUnitManager);
 end;
 
 end.

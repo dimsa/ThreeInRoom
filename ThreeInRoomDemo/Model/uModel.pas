@@ -93,6 +93,21 @@ type
     procedure Init; override;
   end;
 
+  TArkadiy = class(TLeftBottomRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TSpaghetti = class(TLeftBottomRoomObject)
+  public
+    procedure Init; override;
+  end;
+
+  TWindowSill = class(TLeftTopRoomObject)
+  public
+    procedure Init; override;
+  end;
+
 implementation
 
 uses
@@ -402,6 +417,50 @@ begin
   Result := TPointF.Create(
     FContainer.Width * vRoom.ScaleX * 0.5,
     -FContainer.Height * vRoom.ScaleY * 0.5);
+end;
+
+{ TArkadiy }
+
+procedure TArkadiy.Init;
+var
+  vName: string;
+begin
+  inherited;
+  vName := 'Arkadiy';
+  with FManager.ByObject(FContainer) do begin
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
+end;
+
+{ TSpaghetti }
+
+procedure TSpaghetti.Init;
+var
+  vName: string;
+begin
+  inherited;
+  vName := 'Spaghetti';
+  with FManager.ByObject(FContainer) do begin
+    AddRendition(vName);
+    AddColliderObj(vName);
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
+end;
+
+{ TWindowSill }
+
+procedure TWindowSill.Init;
+var
+  vName: string;
+begin
+  inherited;
+  vName := 'Windowsill';
+  with FManager.ByObject(FContainer) do begin
+    AddRendition(vName);
+    AddNewLogic(TLogicAssets.MovingThroughSides);
+  end;
 end;
 
 end.
