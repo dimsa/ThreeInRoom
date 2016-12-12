@@ -9,10 +9,14 @@ uses
 
 type
   TGameUnit = class
+  private
+    FLevel: Integer;
+    procedure SetLevel(const Value: Integer);
   protected
     FContainer: TSoObject;
     FManager: TUnitManager;
     FRect: TRectObject;
+    FLevels: TLevels;
     procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
     function Margin: TPointF; virtual;
@@ -28,6 +32,8 @@ type
     procedure PreventOverlapFor(const AUnit: TGameUnit);
     function GetVisualPosition: Single;
     procedure SendToFront;
+    property Level: Integer read FLevel write SetLevel;
+    function IsPointIn(const AP: TPointF): Boolean;
     constructor Create(const AManager: TUnitManager); virtual;
   end;
 
@@ -122,6 +128,11 @@ begin
   FContainer[Rendition].Val<TEngine2DRendition>.SendToFront;//.BringToBack;//;
 end;
 
+procedure TGameUnit.SetLevel(const Value: Integer);
+begin
+  FLevel := Value;
+end;
+
 procedure TGameUnit.Show;
 begin
   FContainer[Rendition].Val<TEngine2DRendition>.Enabled := True;
@@ -154,6 +165,11 @@ begin
     FContainer := ActiveContainer;
     AddProperty('World', FManager.ObjectByName('World'));
   end;
+end;
+
+function TGameUnit.IsPointIn(const AP: TPointF): Boolean;
+begin
+  Result := FLevels.IsPointIn(AP, FLevel);
 end;
 
 function TGameUnit.Margin: TPointF;
@@ -237,6 +253,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(6, 33, 308, 107), TRectF.Empty);
+
   vName := 'Bed';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
@@ -254,6 +273,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(24, 52, 87, 80), TRectF.Empty);
+
   vName := 'Chair';
   with FManager.ByObject(FContainer) do begin
     FContainer := ActiveContainer;
@@ -272,6 +294,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Create(5, 6, 90, 56), TRectF.Empty, TRectF.Empty);
+
   vName := 'Tabouret';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
@@ -289,6 +314,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Empty, TRectF.Empty);
+
   vName := 'Cactus';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
@@ -306,6 +334,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(2, 2, 188, 133), TRectF.Empty);
+
   vName := 'Table';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
@@ -468,6 +499,9 @@ var
   vName: string;
 begin
   inherited;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Empty, TRectF.Create(7, 6, 120, 200));
+
   vName := 'Windowsill';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);

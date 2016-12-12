@@ -51,6 +51,9 @@ var
 begin
   inherited;
   vName := FName;
+
+  FLevels := TLevels.Create(FContainer, TRectF.Create(17, 7, 53, 18), TRectF.Empty, TRectF.Empty);
+
   FDestination := TDestination.Create;
   FActivator := TActivator.Create;//(Self);
   FActivator.OnActivate := OnActivate;

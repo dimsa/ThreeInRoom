@@ -302,33 +302,8 @@
 		"Name": "Chair",
 		"Body": {
 			"Fixtures": [{
-				"Type": "Circle",
-				"Center": "-33,61",
-				"Radius": "12",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "33,62",
-				"Radius": "12",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "-33,22",
-				"Radius": "12",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "33,22",
-				"Radius": "12",
+				"Type": "Poly",
+				"Points": ["-41,11", "-39,69", "42,69", "42,11"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
@@ -340,33 +315,8 @@
 		"Name": "Tabouret",
 		"Body": {
 			"Fixtures": [{
-				"Type": "Circle",
-				"Center": "-32,31",
-				"Radius": "16",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "29,31",
-				"Radius": "16",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "-28,-13",
-				"Radius": "12",
-				"Density": "1",
-				"Friction": "0",
-				"Restitution": "0",
-				"IsSensor": "0"
-			}, {
-				"Type": "Circle",
-				"Center": "30,-14",
-				"Radius": "12",
+				"Type": "Poly",
+				"Points": ["-41,-41", "-47,43", "45,46", "43,-41"],
 				"Density": "1",
 				"Friction": "0",
 				"Restitution": "0",
