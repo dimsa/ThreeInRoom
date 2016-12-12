@@ -34,13 +34,13 @@ type
   TLevels = class
   private
     FLevels, FOriginalLevels: array[0..3] of TRectF;
-
     function GetLevel(AIndex: Integer): TRectF;
     procedure OnPositionChanged(ASender: TObject; APosition: TPosition);
   public
     property Level[AIndex: Integer]: TRectF read GetLevel; default;
     function IsPointIn(APoint: TPointF; ALevel: Integer): Boolean;
     constructor Create(const ASoObject: TSoObject; const ALevel1, ALevel2, ALevel3: TRectF);
+    constructor CreateZeroLevel(const ASoObject: TSoObject; const ALevel0: TRectF);
   end;
 
   TLevelMap = class
@@ -49,8 +49,18 @@ type
   public
     procedure AddLevels(const ALevels: TLevels);
     function LevelInPoint(const ALevel: Integer; const APoint: TPointF): Integer;
+    function CanStep(const AMyLevel: Integer): Boolean;
     constructor Create;
     destructor Destroy; override;
+  end;
+
+  TLevelController = class
+  private
+    FLevel: Integer;
+    procedure SetLevel(const Value: Integer);
+  public
+    property Level: Integer read FLevel write SetLevel;
+    procedure Jump(const ALevel: Integer);
   end;
 
 implementation
@@ -105,10 +115,18 @@ end;
 constructor TLevels.Create(const ASoObject: TSoObject; const ALevel1, ALevel2, ALevel3: TRectF);
 begin
   ASoObject.AddChangePositionHandler(OnPositionChanged);
+
   FOriginalLevels[1] := ALevel1;
   FOriginalLevels[2] := ALevel2;
   FOriginalLevels[3] := ALevel3;
 
+  OnPositionChanged(ASoObject, ASoObject.Position);
+end;
+
+constructor TLevels.CreateZeroLevel(const ASoObject: TSoObject; const ALevel0: TRectF);
+begin
+  ASoObject.AddChangePositionHandler(OnPositionChanged);
+  FOriginalLevels[0] := ALevel0;
   OnPositionChanged(ASoObject, ASoObject.Position);
 end;
 
@@ -137,6 +155,11 @@ begin
   FMap.Add(ALevels);
 end;
 
+function TLevelMap.CanStep(const AMyLevel: Integer): Boolean;
+begin
+
+end;
+
 constructor TLevelMap.Create;
 begin
   FMap := TList<TLevels>.Create;
@@ -156,12 +179,24 @@ begin
   vMin := Max(0, ALevel - 1);
   vMax := Min(3, ALevel + 1);
 
-  for i := 0 to FMap.Count - 1 do
-    for j := vMin to vMax do
-      if FMap[i].FLevels[j].Contains(APoint) then
-        Exit(j);
-
   Result := -1;
+
+  for j := vMin to vMax do
+     for i := 0 to FMap.Count - 1 do
+      if FMap[i].FLevels[j].Contains(APoint) then
+        Result := j;
+end;
+
+{ TLevelController }
+
+procedure TLevelController.Jump(const ALevel: Integer);
+begin
+  FLevel := ALevel;
+end;
+
+procedure TLevelController.SetLevel(const Value: Integer);
+begin
+  FLevel := Value;
 end;
 
 end.

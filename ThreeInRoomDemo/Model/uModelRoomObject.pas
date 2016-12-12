@@ -79,15 +79,19 @@ var
 begin
   inherited;
 
-  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(6, 33, 308, 107), TRectF.Empty);
-  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
   vName := 'Bed';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+
+  FLevels := TLevels.Create(
+    FContainer,
+    TRectF.Empty,
+    TRectF.Create(6, 33, 308, 107).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)),
+    TRectF.Empty);
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
   RandomizePosition(FContainer);
 end;
@@ -100,9 +104,6 @@ var
 begin
   inherited;
 
-  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(24, 52, 87, 80), TRectF.Empty);
-  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
   vName := 'Chair';
   with FManager.ByObject(FContainer) do begin
     FContainer := ActiveContainer;
@@ -110,6 +111,13 @@ begin
     AddColliderObj(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+
+  FLevels := TLevels.Create(
+    FContainer,
+    TRectF.Empty,
+    TRectF.Create(24, 52, 87, 80).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)),
+    TRectF.Empty);
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
   RandomizePosition(FContainer);
 end;
@@ -122,15 +130,19 @@ var
 begin
   inherited;
 
-  FLevels := TLevels.Create(FContainer, TRectF.Create(5, 6, 90, 56), TRectF.Empty, TRectF.Empty);
-  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
   vName := 'Tabouret';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+
+  FLevels := TLevels.Create(
+    FContainer,
+    TRectF.Create(5, 6, 90, 56).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)),
+    TRectF.Empty,
+    TRectF.Empty);
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
   RandomizePosition(FContainer);
 end;
@@ -164,15 +176,18 @@ var
 begin
   inherited;
 
-  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Create(2, 2, 188, 133), TRectF.Empty);
-  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
   vName := 'Table';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+
+  FLevels := TLevels.Create(
+    FContainer, TRectF.Empty,
+    TRectF.Create(2, 2, 188, 133).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)),
+    TRectF.Empty);
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
   RandomizePosition(FContainer);
 end;
@@ -280,14 +295,19 @@ var
 begin
   inherited;
 
-  FLevels := TLevels.Create(FContainer, TRectF.Empty, TRectF.Empty, TRectF.Create(7, 6, 120, 200));
-  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
   vName := 'Windowsill';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+
+  FLevels := TLevels.Create(
+    FContainer,
+    TRectF.Empty,
+    TRectF.Empty,
+    TRectF.Create(7, 6, 120, 200).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)));
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
+
 end;
 
 end.

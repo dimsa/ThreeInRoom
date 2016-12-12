@@ -9,8 +9,6 @@ uses
 
 type
   TGameUnit = class
-  private
-    procedure SetLevel(const Value: Integer);
   protected
     FContainer: TSoObject;
     FManager: TUnitManager;
@@ -20,31 +18,36 @@ type
     procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
     function Margin: TPointF; virtual;
+    function GetLevel: Integer; virtual;
+    procedure SetLevel(const Value: Integer); virtual;
   public
     function Height: Single;
     function Width: Single;
     procedure Scale(const AScale: Single);
     procedure Resize; virtual;
-    procedure MoveTo(const AX, AY: Integer);
+    procedure MoveTo(const AX, AY: Integer); virtual;
     procedure Show;
     procedure Hide;
     function Rect: TRectF;
     procedure PreventOverlapFor(const AUnit: TGameUnit);
     function GetVisualPosition: Single;
     procedure SendToFront;
-    property Level: Integer read FLevel write SetLevel;
+    property Level: Integer read GetLevel write SetLevel;
     function IsPointIn(const AP: TPointF): Boolean;
     constructor Create(const AManager: TUnitManager); virtual;
   end;
 
   TRoom = class(TGameUnit)
   private
+    FLevelMap: TLevelMap;
+    FLevels0: TLevels;
     FCell: TPointF;
     function Margin: TPointF; override;
   public
     procedure Init; override;
     property Cell: TPointF read FCell;
     procedure Resize; override;
+    constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap); virtual;
   end;
 
   TRoomObject = class(TGameUnit)
@@ -83,9 +86,14 @@ begin
   Init;
 end;
 
+function TGameUnit.GetLevel: Integer;
+begin
+  Result := FLevel;
+end;
+
 function TGameUnit.GetVisualPosition: Single;
 begin
-  Result := FContainer.Y + (FContainer.Height / 2) * FContainer.ScaleY;
+  Result := FContainer.Y + (FContainer.Height / 2) * FContainer.ScaleY + (FContainer.Height / 2) * GetLevel;
 end;
 
 function TGameUnit.Height: Single;
@@ -182,6 +190,13 @@ end;
 
 { TRoom }
 
+constructor TRoom.Create(const AManager: TUnitManager;
+  const ALevelMap: TLevelMap);
+begin
+  FLevelMap := ALevelMap;
+  inherited Create(AManager);
+end;
+
 procedure TRoom.Init;
 var
   vName: string;
@@ -193,6 +208,13 @@ begin
     AddRendition(vName);
     AddColliderObj(vName);
   end;
+
+  FLevels0 := TLevels.CreateZeroLevel(
+    FContainer,
+    TRectF.Create(0, 384, 640, 1024).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY))
+  );
+
+  FLevelMap.AddLevels(FLevels0);
 
   FContainer.X := 0;
   FContainer.Y := 0;

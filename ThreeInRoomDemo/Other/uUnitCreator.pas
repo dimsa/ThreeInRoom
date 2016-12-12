@@ -122,7 +122,7 @@ end;
 
 function TUnitCreator.NewRoom: TRoom;
 begin
-  Result := TRoom.Create(FUnitManager);
+  Result := TRoom.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewSpaghetti: TSpaghetti;

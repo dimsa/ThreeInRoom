@@ -20,6 +20,7 @@ type
     FActiveGnome: TGnome;
     FWorld: TSoObject;
     FLevelMap: TLevelMap;
+    FLevels0: TLevels;
     FIcons: TDict<TGameUnit, THeroIcon>;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
@@ -213,9 +214,14 @@ begin
   FObjects.Last.MoveTo(16, 1);
 
 
-  FGnomes.Add(FUnitCreator.NewTy);
-  FGnomes.Add(FUnitCreator.NewRi);
-  FGnomes.Add(FUnitCreator.NewOn);
+  with FGnomes do begin
+    Add(FUnitCreator.NewTy);
+    Last.MoveTo(11, 10);
+    Add(FUnitCreator.NewRi);
+    Last.MoveTo(9, 9);
+    Add(FUnitCreator.NewOn);
+    Last.MoveTo(9, 11);
+  end;
 
   for i := 0 to FGnomes.Count - 1 do
   begin

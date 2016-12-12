@@ -32,6 +32,17 @@ implementation
 uses
   uModel, uSoSprite, uSoSound, uSoColliderObject, uSoMouseHandler;
 
+function MySign(const AValue: Single): Integer;
+begin
+  if AValue > 0 then
+    Exit(1);
+  if AValue < 0 then
+    Exit(-1);
+
+  Result := 0;
+end;
+
+
 { TLogicAssets }
 
 class procedure TLogicAssets.FollowTheShip(ASoObject: TSoObject);
@@ -116,12 +127,15 @@ var
   vDx, vDy: Single;
   vIsHere: Boolean;
   vRend: TSoSprite;
+  vLevelMap: TLevelMap;
+  vLevelController: TLevelController;
 begin
   vDx := 2;
   vDy := 2;
   with ASoObject do begin
-//    vAcceleration := ASoObject['Acceleration'].Val<TAcceleration>;
     vDest := ASoObject['Destination'].Val<TDestination>;
+    vLevelMap := ASoObject['LevelMap'].Val<TLevelMap>;
+    vLevelController := ASoObject['LevelController'].Val<TLevelController>;
 
     vIsHere := True;
     if (X <= vDest.X + vDx) and (X >= vDest.X - vDx) then
@@ -137,7 +151,23 @@ begin
       vIsHere := False;
 
     if vIsHere then
+    begin
+      // Обработка падений
+      if vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X, Y)) = vLevelController.Level + 1 then
+      begin
+        vLevelController.Jump(vLevelController.Level + 1);
+        ScaleY := Abs(ScaleY) + 0.1;
+        ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
+      end;
+      if (vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X, Y)) = vLevelController.Level - 1)
+       and (vLevelController.Level - 1 > -1) then
+      begin
+        vLevelController.Jump(vLevelController.Level - 1);
+        ScaleY := Abs(ScaleY) - 0.1;
+        ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
+      end;
       Exit;
+    end;
 
 
    if (X > vDest.X) then
@@ -151,6 +181,21 @@ begin
    begin
      vDy := -Abs(vDy);
    end;
+
+  if vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy)) = vLevelController.Level + 1 then
+  begin
+    vLevelController.Jump(vLevelController.Level + 1);
+    ScaleY := Abs(ScaleY) + 0.1;
+    ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
+  end;
+  if
+    (vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy)) = vLevelController.Level - 1)
+    and (vLevelController.Level - 1 > -1) then
+  begin
+    vLevelController.Jump(vLevelController.Level - 1);
+    ScaleY := Abs(ScaleY) - 0.1;
+    ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
+  end;
 
    X := X + vDx;
    Y := Y + vDy;
