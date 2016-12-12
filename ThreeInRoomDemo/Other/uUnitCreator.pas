@@ -6,7 +6,7 @@ uses
   System.SysUtils,
   uSoTypes, uGeometryClasses,
   uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson,
-  uModelHero, uModelClasses;
+  uModelHero, uModelClasses, uModelRoomObject;
 
 type
   TGameUnitFriend = class(TGameUnit);
@@ -53,27 +53,27 @@ end;
 
 function TUnitCreator.NewArkadiy: TArkadiy;
 begin
-  Result := TArkadiy.Create(FUnitManager);
+  Result := TArkadiy.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewBed: TBed;
 begin
-  Result := TBed.Create(FUnitManager);
+  Result := TBed.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewCactus: TCactus;
 begin
-  Result := TCactus.Create(FUnitManager);
+  Result := TCactus.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewChair: TChair;
 begin
-  Result := TChair.Create(FUnitManager);
+  Result := TChair.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewGnome: TGnome;
 begin
-  Result := TGnome.Create(FUnitManager);
+  Result := TGnome.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewHero(const ANumber: Integer): THeroIcon;
@@ -102,22 +102,22 @@ end;
 
 function TUnitCreator.NewLamp: TLamp;
 begin
-  Result := TLamp.Create(FUnitManager);
+  Result := TLamp.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewLocker: TLocker;
 begin
-  Result := TLocker.Create(FUnitManager);
+  Result := TLocker.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewOn: TGnome;
 begin
-  Result := TOn.Create(FUnitManager);
+  Result := TOn.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewRi: TGnome;
 begin
-  Result := TRi.Create(FUnitManager);
+  Result := TRi.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewRoom: TRoom;
@@ -127,27 +127,27 @@ end;
 
 function TUnitCreator.NewSpaghetti: TSpaghetti;
 begin
-  Result := TSpaghetti.Create(FUnitManager);
+  Result := TSpaghetti.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewTable: TTable;
 begin
-  Result := TTable.Create(FUnitManager);
+  Result := TTable.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewTabouret: TTabouret;
 begin
-  Result := TTabouret.Create(FUnitManager);
+  Result := TTabouret.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewTy: TGnome;
 begin
-  Result := TTy.Create(FUnitManager);
+  Result := TTy.Create(FUnitManager, FLevelMap);
 end;
 
 function TUnitCreator.NewWindowSill: TWindowSill;
 begin
-  Result := TWindowSill.Create(FUnitManager);
+  Result := TWindowSill.Create(FUnitManager, FLevelMap);
 end;
 
 end.

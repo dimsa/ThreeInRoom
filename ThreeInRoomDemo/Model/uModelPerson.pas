@@ -7,7 +7,7 @@ uses
   uModel, uModelClasses, uLogicAssets, uSoObjectDefaultProperties;
 
 type
-  TGnome = class(TGameUnit)
+  TGnome = class(TRoomObject)
   private
     FDestination: TDestination;
     FActivated: TNotifyEvent;
@@ -60,6 +60,7 @@ begin
   vName := FName;
 
   FLevels := TLevels.Create(FContainer, TRectF.Create(17, 7, 53, 18), TRectF.Empty, TRectF.Empty);
+  FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
   FDestination := TDestination.Create;
   FActivator := TActivator.Create;//(Self);

@@ -13,7 +13,8 @@ uses
   uAcceleration in 'Other\uAcceleration.pas',
   uModelClasses in 'Model\uModelClasses.pas',
   uModelPerson in 'Model\uModelPerson.pas',
-  uModelHero in 'Model\uModelHero.pas';
+  uModelHero in 'Model\uModelHero.pas',
+  uModelRoomObject in 'Model\uModelRoomObject.pas';
 
 {$R *.res}
 
