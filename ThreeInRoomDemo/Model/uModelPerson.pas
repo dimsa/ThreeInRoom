@@ -18,6 +18,7 @@ type
   public
     property Activated: TNotifyEvent read FActivated write FActivated;
     procedure AddDestination(const APoint: TPointF);
+    procedure JumpTo(const APoint: TPointF);
     procedure Init; override;
   end;
 
@@ -41,8 +42,14 @@ implementation
 { TGnome }
 
 procedure TGnome.AddDestination(const APoint: TPointF);
+var
+  vLevelCorrect: TPointF;
 begin
-  FDestination.Value := APoint;
+  vLevelCorrect := TPointF.Create(
+    0,
+    (-FContainer[RenditionRect].Val<TRectObject>.Height * 0.5 + FLevel * 32)  * FContainer.ScaleY
+  );
+  FDestination.Value := APoint + vLevelCorrect;
 end;
 
 procedure TGnome.Init;
@@ -71,6 +78,11 @@ begin
 
   RandomizePosition(FContainer);
   FDestination.Value := FContainer.Position.XY;
+end;
+
+procedure TGnome.JumpTo(const APoint: TPointF);
+begin
+
 end;
 
 procedure TGnome.OnActivate(ASender: TObject);

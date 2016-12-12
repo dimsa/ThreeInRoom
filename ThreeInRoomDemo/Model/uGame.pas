@@ -5,7 +5,7 @@ interface
 uses
   System.Generics.Collections,
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
-  uUtils, uModel, uSoManager, uSoObject, uModelPerson, uModelHero;
+  uUtils, uModel, uSoManager, uSoObject, uModelPerson, uModelHero, uModelClasses;
 
 type
   TGame = class
@@ -19,6 +19,7 @@ type
     FGnomes: TList<TGnome>;
     FActiveGnome: TGnome;
     FWorld: TSoObject;
+    FLevelMap: TLevelMap;
     FIcons: TDict<TGameUnit, THeroIcon>;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
@@ -41,12 +42,13 @@ begin
 
   FGnomes := TList<TGnome>.Create;
   FIcons := TDict<TGameUnit, THeroIcon>.Create;
+  FLevelMap := TLevelMap.Create;
 
   FManager := AManager;
 
   with FManager do begin
     FMapPainter := TMapPainter.Create(WorldManager, ResourcePath('RoomBack.png'));
-    FUnitCreator := TUnitCreator.Create(UnitManager);
+    FUnitCreator := TUnitCreator.Create(UnitManager, FLevelMap);
 
     TemplateManager.LoadSeJson(ResourcePath('ThreeInRoom.sejson'));
     TemplateManager.LoadSeCss( ResourcePath('Formatters.secss'));
@@ -71,6 +73,7 @@ end;
 
 destructor TGame.Destroy;
 begin
+  FLevelMap.Free;
   FGnomes.Free;
   FIcons.Free;
   inherited;

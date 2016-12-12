@@ -6,7 +6,7 @@ uses
   System.SysUtils,
   uSoTypes, uGeometryClasses,
   uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson,
-  uModelHero;
+  uModelHero, uModelClasses;
 
 type
   TGameUnitFriend = class(TGameUnit);
@@ -14,6 +14,7 @@ type
   TUnitCreator = class
   private
     FUnitManager: TUnitManager;
+    FLevelMap: TLevelMap;
     function NewGnome: TGnome;
   public
     function NewRoom: TRoom;
@@ -34,7 +35,7 @@ type
     function NewHero(const AName: string): THeroIcon; overload;
     function NewHero(const ANumber: Integer): THeroIcon; overload;
 
-    constructor Create(const AUnitManager: TUnitManager);
+    constructor Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap);
   end;
 
 implementation
@@ -44,9 +45,10 @@ uses
 
 { TUnitCreator }
 
-constructor TUnitCreator.Create(const AUnitManager: TUnitManager);
+constructor TUnitCreator.Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap);
 begin
   FUnitManager := AUnitManager;
+  FLevelMap := ALevelMap;
 end;
 
 function TUnitCreator.NewArkadiy: TArkadiy;

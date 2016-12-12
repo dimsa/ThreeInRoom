@@ -3,6 +3,7 @@ unit uModelClasses;
 interface
 
 uses
+  System.Math,
   uSoTypes, uSoObject, uGeometryClasses;
 
 type
@@ -42,6 +43,15 @@ type
     constructor Create(const ASoObject: TSoObject; const ALevel1, ALevel2, ALevel3: TRectF);
   end;
 
+  TLevelMap = class
+  private
+    FMap: TList<TLevels>;
+  public
+    procedure AddLevels(const ALevels: TLevels);
+    function LevelInPoint(const ALevel: Integer; const APoint: TPointF): Integer;
+    constructor Create;
+    destructor Destroy; override;
+  end;
 
 implementation
 
@@ -118,6 +128,40 @@ var
 begin
   for i := 0 to 3 do
     FLevels[i] := FOriginalLevels[i].Multiply(APosition.Scale).Move(APosition.XY);
+end;
+
+{ TLevelMap }
+
+procedure TLevelMap.AddLevels(const ALevels: TLevels);
+begin
+  FMap.Add(ALevels);
+end;
+
+constructor TLevelMap.Create;
+begin
+  FMap := TList<TLevels>.Create;
+end;
+
+destructor TLevelMap.Destroy;
+begin
+  FMAp.Free;
+  inherited;
+end;
+
+function TLevelMap.LevelInPoint(const ALevel: Integer; const APoint: TPointF): Integer;
+var
+  vMin, vMax: Integer;
+  i, j: Integer;
+begin
+  vMin := Max(0, ALevel - 1);
+  vMax := Min(3, ALevel + 1);
+
+  for i := 0 to FMap.Count - 1 do
+    for j := vMin to vMax do
+      if FMap[i].FLevels[j].Contains(APoint) then
+        Exit(j);
+
+  Result := -1;
 end;
 
 end.

@@ -10,13 +10,13 @@ uses
 type
   TGameUnit = class
   private
-    FLevel: Integer;
     procedure SetLevel(const Value: Integer);
   protected
     FContainer: TSoObject;
     FManager: TUnitManager;
     FRect: TRectObject;
     FLevels: TLevels;
+    FLevel: Integer;
     procedure Init; virtual;
     procedure RandomizePosition(const ASubject: TSoObject);
     function Margin: TPointF; virtual;
