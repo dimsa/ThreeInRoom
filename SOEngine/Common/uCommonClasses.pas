@@ -7,9 +7,13 @@ uses
 
 type
   TDelegate<T> = function: T of object;
+
   TParameteredDelegate<T1, T2> = function(ASender: T1): T2 of object;
+
   TEvent<T> = procedure(ASender: TObject; AEventArgs: T) of object;
+
   TNotifyEvent<T> = procedure(ASender: T) of object;
+
   TStaticNotifyEvent<T> = procedure(ASender: T);
 
   // In fact it is THandlerList
@@ -20,6 +24,7 @@ type
     procedure Add(AItem: TEvent<T>);
     procedure Remove(AItem: TEvent<T>);
     procedure RaiseEvent(ASender: TObject; AEventArgs: T);
+    //procedure RaiseEventExcept(ASender: TObject; AEventArgs: T; AEvent: TEvent<T>);
     constructor Create;
     destructor Destroy; override;
   end;
@@ -67,6 +72,20 @@ begin
   end;
 end;
 
+{procedure TEventList<T>.RaiseEventExcept(ASender: TObject; AEventArgs: T; AEvent: TEvent<T>);
+var
+  i: Integer;
+  vEventHandler, vEvent: TEvent<T>;
+begin
+  vEvent := AEvent;
+  for i := 0 to FList.Count - 1 do
+  begin
+    vEventHandler := FList[i];
+    if not Equals(FList[i], vEvent) then
+      vEventHandler(ASender, AEventARgs);
+  end;
+end; }
+
 procedure TEventList<T>.Remove(AItem: TEvent<T>);
 begin
   FList.Remove(AItem);
@@ -104,3 +123,5 @@ begin
 end;
 
 end.
+
+

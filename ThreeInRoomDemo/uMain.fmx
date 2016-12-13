@@ -2,6 +2,7 @@ object ThreeInRoom: TThreeInRoom
   StyleName = '768'
   Left = 0
   Top = 0
+  BorderStyle = Single
   Caption = 'Three In Room'
   ClientHeight = 768
   ClientWidth = 480

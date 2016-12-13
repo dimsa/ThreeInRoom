@@ -129,6 +129,7 @@ var
   vRend: TSoSprite;
   vLevelMap: TLevelMap;
   vLevelController: TLevelController;
+  vNewLevel: Integer;
 begin
   vDx := 2;
   vDy := 2;
@@ -182,20 +183,24 @@ begin
      vDy := -Abs(vDy);
    end;
 
-  if vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy)) = vLevelController.Level + 1 then
-  begin
-    vLevelController.Jump(vLevelController.Level + 1);
-    ScaleY := Abs(ScaleY) + 0.1;
-    ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
+   vNewLevel := vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy));
+
+   if vNewLevel = vLevelController.Level + 1 then
+   begin
+     vLevelController.Jump(vLevelController.Level + 1);
+     ScaleY := Abs(ScaleY) + 0.1;
+     ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
   end;
-  if
-    (vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy)) = vLevelController.Level - 1)
-    and (vLevelController.Level - 1 > -1) then
+
+  if (vNewLevel = vLevelController.Level - 1) and (vLevelController.Level - 1 > -1) then
   begin
     vLevelController.Jump(vLevelController.Level - 1);
     ScaleY := Abs(ScaleY) - 0.1;
     ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
   end;
+
+  if (vNewLevel > vLevelController.Level + 1) or (vNewLevel <  vLevelController.Level - 1) or (vNewLevel = -1) then
+    Exit;
 
    X := X + vDx;
    Y := Y + vDy;

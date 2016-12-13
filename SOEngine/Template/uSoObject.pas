@@ -168,6 +168,8 @@ begin
   FPosition.X := AX;
   FPosition.Y := AY;
   FPosition.Rotate := ARotate;
+
+  FOnChangePositionHandlers.RaiseEvent(Self, FPosition);
 end;
 
 procedure TSoObject.SetRotate(const Value: Single);

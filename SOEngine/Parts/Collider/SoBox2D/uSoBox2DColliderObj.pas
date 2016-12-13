@@ -14,6 +14,7 @@ type
     FWorld: Tb2World;
     FLastScale: TPointF;
     FOriginalShapes: TList<Tb2Shape>;
+    FWasSilent: Boolean;
     function B2TransformFromSubject: Tb2Transform;
     procedure OnPositionChanged(ASender: TObject; APosition: TPosition);
     function BodyTypeToBox2DBodyType(const ABodyType: TBodyType): Tb2BodyType;
@@ -136,20 +137,24 @@ procedure TSoBox2DColliderObj.OnPositionChanged(ASender: TObject;
 var
   vVector: TVector2;
 begin
+  if FWasSilent then
+  begin
+    FWasSilent := False;
+    Exit;
+  end;
+
   vVector.x := APosition.X;
   vVector.y := APosition.Y;
 
   FBody.SetTransform(vVector, APosition.Rotate);
   Scale(APosition.Scale);
-//  FBody.SetType(Tb2BodyType.b2_staticBody);
-
-//  FBody.SetType(Tb2BodyType.b2_dynamicBody);
 end;
 
 procedure TSoBox2DColliderObj.RefreshSubjectPosition;
 begin
   inherited;
   FSubject.SetPositionSilent(FBody.GetPosition.x, FBody.GetPosition.y, FBody.GetAngle);
+  FWasSilent := True;
 end;
 
 procedure TSoBox2DColliderObj.Scale(AScale: TPointF);

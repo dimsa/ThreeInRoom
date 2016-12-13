@@ -285,6 +285,7 @@ begin
     AddColliderObj(vName);
     AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
+  FLevel := 2;
 end;
 
 { TWindowSill }

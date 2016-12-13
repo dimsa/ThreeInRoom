@@ -93,7 +93,7 @@ end;
 
 function TGameUnit.GetVisualPosition: Single;
 begin
-  Result := FContainer.Y + (FContainer.Height / 2) * FContainer.ScaleY + (FContainer.Height / 2) * GetLevel;
+  Result := FContainer.Y + (FContainer.Height / 2) * FContainer.ScaleY + {(FContainer.Height / 2)}100 * GetLevel * FContainer.ScaleY;
 end;
 
 function TGameUnit.Height: Single;
