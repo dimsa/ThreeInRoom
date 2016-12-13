@@ -73,7 +73,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   FLevels := TLevels.Create(
@@ -99,7 +98,6 @@ begin
     FContainer := ActiveContainer;
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   FLevels := TLevels.Create(
@@ -124,7 +122,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   FLevels := TLevels.Create(
@@ -152,7 +149,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   RandomizePosition(FContainer);
@@ -170,7 +166,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   FLevels := TLevels.Create(
@@ -193,7 +188,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
     AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
   end;
 
@@ -216,7 +210,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
     AddMouseHandler(ByCollider).OnMouseDown := TLogicAssets.OnTestMouseDown;
   end;
 
@@ -234,7 +227,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 end;
 
@@ -249,7 +241,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
     AddColliderObj(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
   FLevel := 2;
 end;
@@ -265,7 +256,6 @@ begin
   vName := 'Windowsill';
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
-    AddNewLogic(TLogicAssets.MovingThroughSides);
   end;
 
   FLevels := TLevels.Create(
@@ -274,7 +264,6 @@ begin
     TRectF.Empty,
     TRectF.Create(7, 6, 120, 200).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY)));
   FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
-
 end;
 
 end.

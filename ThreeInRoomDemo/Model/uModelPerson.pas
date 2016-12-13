@@ -4,7 +4,7 @@ interface
 
 uses
   uSoTypes,
-  uModel, uModelClasses, uLogicAssets, uSoObjectDefaultProperties;
+  uModel, uModelClasses, uLogicAssets, uSoObjectDefaultProperties, uModelItem;
 
 type
   TGnome = class(TRoomObject)
@@ -12,7 +12,9 @@ type
     FDestination: TDestination;
     FActivated: TNotifyEvent;
     FLevelController: TLevelController;
+    FCarryingItem: TModelItem;
     procedure OnActivate(ASender: TObject);
+    procedure SetCarryingItem(const Value: TModelItem);
   protected
     FActivator: TActivator;
     FName: string;
@@ -22,22 +24,22 @@ type
     property Activated: TNotifyEvent read FActivated write FActivated;
     procedure AddDestination(const APoint: TPointF);
     procedure MoveTo(const AX, AY: Integer); override;
-    procedure JumpTo(const APoint: TPointF);
+    property CarryingItem: TModelItem read FCarryingItem write SetCarryingItem;
     procedure Init; override;
   end;
 
   TTy = class(TGnome)
-  private
+  protected
     procedure Init; override;
   end;
 
   TRi = class(TGnome)
-  private
+  protected
     procedure Init; override;
   end;
 
   TOn = class(TGnome)
-  private
+  protected
     procedure Init; override;
   end;
 
@@ -49,10 +51,8 @@ procedure TGnome.AddDestination(const APoint: TPointF);
 var
   vLevelCorrect: TPointF;
 begin
-  vLevelCorrect := TPointF.Create(
-    0,
-    (-FContainer[RenditionRect].Val<TRectObject>.Height * 0.5 + FLevel * 32)  * FContainer.ScaleY
-  );
+  vLevelCorrect :=
+    TPointF.Create(0, (-FContainer[RenditionRect].Val<TRectObject>.Height * 0.5 + FLevel * 32)  * FContainer.ScaleY);
   FDestination.Value := APoint + vLevelCorrect;
 end;
 
@@ -78,21 +78,13 @@ begin
   FActivator.OnActivate := OnActivate;
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
-    with AddColliderObj('Ri1') do
-    begin
-      AddOnBeginContactHandler(TLogicAssets.OnCollideAsteroid);
-    end;
+    AddColliderObj('Ri1'); // Only for pushing item
     AddProperty('Destination', FDestination);
     AddProperty('Activator', FActivator);
     AddProperty('LevelController', FLevelController);
     AddMouseHandler(ByStaticRect).OnMouseLongPress := TLogicAssets.OnGnomeLongPress;
     AddNewLogic(TLogicAssets.MovingToDestination);
   end;
-end;
-
-procedure TGnome.JumpTo(const APoint: TPointF);
-begin
-
 end;
 
 procedure TGnome.MoveTo(const AX, AY: Integer);
@@ -105,6 +97,11 @@ procedure TGnome.OnActivate(ASender: TObject);
 begin
   if Assigned(FActivated) then
     FActivated(Self);
+end;
+
+procedure TGnome.SetCarryingItem(const Value: TModelItem);
+begin
+  FCarryingItem := Value;
 end;
 
 procedure TGnome.SetLevel(const Value: Integer);

@@ -21,7 +21,6 @@ type
     FActiveGnome: TGnome;
     FWorld: TSoObject;
     FLevelMap: TLevelMap;
-    FLevels0: TLevels;
     FIcons: TDict<TGameUnit, THeroIcon>;
     FOptions: TSoEngineOptions;
     procedure StartGame;
@@ -153,10 +152,7 @@ end;
 procedure TGame.SortSprites(ASoObject: TSoObject);
 var
   i, j, iMax: Integer;
-
-//  vIndArr: TArray<Integer>;
   vMax: Single;
-  iOld: Integer;
   vPair: TPair<Integer,Single>;
   vArr: TArray<TPair<Integer,Single>>;
 begin

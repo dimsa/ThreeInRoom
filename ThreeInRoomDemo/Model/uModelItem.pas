@@ -59,8 +59,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
-
-  RandomizePosition(FContainer);
 end;
 
 { TCoatItem }
@@ -74,8 +72,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
-
-  RandomizePosition(FContainer);
 end;
 
 { TBootsItem }
@@ -89,8 +85,6 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
-
-  RandomizePosition(FContainer);
 end;
 
 end.
