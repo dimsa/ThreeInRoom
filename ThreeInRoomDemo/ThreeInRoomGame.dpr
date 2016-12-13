@@ -14,7 +14,8 @@ uses
   uModelClasses in 'Model\uModelClasses.pas',
   uModelPerson in 'Model\uModelPerson.pas',
   uModelHero in 'Model\uModelHero.pas',
-  uModelRoomObject in 'Model\uModelRoomObject.pas';
+  uModelRoomObject in 'Model\uModelRoomObject.pas',
+  uModelItem in 'Model\uModelItem.pas';
 
 {$R *.res}
 

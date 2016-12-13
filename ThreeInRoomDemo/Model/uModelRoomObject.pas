@@ -7,16 +7,6 @@ uses
   uModel, uModelClasses, uLogicAssets, uSoObjectDefaultProperties, uSoObject;
 
 type
-  TLeftTopRoomObject = class(TRoomObject)
-  private
-    function Margin: TPointF; override;
-  end;
-
-  TLeftBottomRoomObject = class(TRoomObject)
-  private
-    function Margin: TPointF; override;
-  end;
-
   TBed =  class(TLeftTopRoomObject)
   public
     procedure Init; override;
@@ -231,30 +221,6 @@ begin
   end;
 
   RandomizePosition(FContainer);
-end;
-
-{ TLeftTopRoomObject }
-
-function TLeftTopRoomObject.Margin: TPointF;
-var
-  vRoom: TSoObject;
-begin
-  vRoom := FContainer['Room'].Val<TSoObject>;
-  Result := TPointF.Create(FContainer.Width * vRoom.ScaleX * 0.5, FContainer.Height * vRoom.ScaleY * 0.5);
-end;
-
-{ TLeftBottomRoomObject }
-
-function TLeftBottomRoomObject.Margin: TPointF;
-var
-  vRoom: TSoObject;
-  vD: Single;
-begin
-  vRoom := FContainer['Room'].Val<TSoObject>;
-  vD := (vRoom.Height * vRoom.ScaleX) / 32;
-  Result := TPointF.Create(
-    FContainer.Width * vRoom.ScaleX * 0.5,
-    -FContainer.Height * vRoom.ScaleY * 0.5);
 end;
 
 { TArkadiy }

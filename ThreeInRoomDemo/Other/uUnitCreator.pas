@@ -6,7 +6,7 @@ uses
   System.SysUtils,
   uSoTypes, uGeometryClasses,
   uEngine2DClasses, uUnitManager, uWorldManager, uModel, uSoObject, uModelPerson,
-  uModelHero, uModelClasses, uModelRoomObject;
+  uModelHero, uModelClasses, uModelRoomObject, uModelItem;
 
 type
   TGameUnitFriend = class(TGameUnit);
@@ -31,6 +31,11 @@ type
     function NewWindowSill: TWindowSill;
     function NewSpaghetti: TSpaghetti;
     function NewArkadiy: TArkadiy;
+
+    function NewKey: TKeyItem;
+    function NewCoat: TCoatItem;
+    function NewHat: THatItem;
+    function NewBoots: TBootsItem;
 
     function NewHero(const AName: string): THeroIcon; overload;
     function NewHero(const ANumber: Integer): THeroIcon; overload;
@@ -61,6 +66,11 @@ begin
   Result := TBed.Create(FUnitManager, FLevelMap);
 end;
 
+function TUnitCreator.NewBoots: TBootsItem;
+begin
+  Result := TBootsItem.Create(FUnitManager, FLevelMap);
+end;
+
 function TUnitCreator.NewCactus: TCactus;
 begin
   Result := TCactus.Create(FUnitManager, FLevelMap);
@@ -71,9 +81,20 @@ begin
   Result := TChair.Create(FUnitManager, FLevelMap);
 end;
 
+function TUnitCreator.NewCoat: TCoatItem;
+begin
+  Result := TCoatItem.Create(FUnitManager, FLevelMap);
+end;
+
 function TUnitCreator.NewGnome: TGnome;
 begin
   Result := TGnome.Create(FUnitManager, FLevelMap);
+end;
+
+function TUnitCreator.NewHat: THatItem;
+begin
+  Result := THatItem.Create(FUnitManager, FLevelMap);
+  Result.Level := 3;
 end;
 
 function TUnitCreator.NewHero(const ANumber: Integer): THeroIcon;
@@ -83,6 +104,12 @@ begin
     1: Result := NewHero('Ri');
     2: Result := NewHero('On');
   end;
+end;
+
+function TUnitCreator.NewKey: TKeyItem;
+begin
+  Result := TKeyItem.Create(FUnitManager, FLevelMap);
+  Result.Level := 3;
 end;
 
 function TUnitCreator.NewHero(const AName: string): THeroIcon;

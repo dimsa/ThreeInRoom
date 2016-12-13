@@ -225,6 +225,13 @@ begin
   FObjects.Add(FUnitCreator.NewArkadiy);
   FObjects.Last.MoveTo(16, 1);
 
+  FObjects.Add(FUnitCreator.NewKey);
+  FObjects.Last.MoveTo(11, 16);
+  FObjects.Add(FUnitCreator.NewHat);
+  FObjects.Last.MoveTo(3, 7);
+  FObjects.Add(FUnitCreator.NewBoots);
+  FObjects.Last.MoveTo(18, 0);
+
 
   with FGnomes do begin
     Add(FUnitCreator.NewTy);

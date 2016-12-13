@@ -320,6 +320,7 @@
         <DCCReference Include="Model\uModelPerson.pas"/>
         <DCCReference Include="Model\uModelHero.pas"/>
         <DCCReference Include="Model\uModelRoomObject.pas"/>
+        <DCCReference Include="Model\uModelItem.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -58,10 +58,44 @@ type
     constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap); virtual;
   end;
 
+  TLeftTopRoomObject = class(TRoomObject)
+  private
+    function Margin: TPointF; override;
+  end;
+
+  TLeftBottomRoomObject = class(TRoomObject)
+  private
+    function Margin: TPointF; override;
+  end;
+
 implementation
 
 uses
   uSoSprite, uUtils, uSoSound, uSoColliderObject, uE2DRendition;
+
+{ TLeftTopRoomObject }
+
+function TLeftTopRoomObject.Margin: TPointF;
+var
+  vRoom: TSoObject;
+begin
+  vRoom := FContainer['Room'].Val<TSoObject>;
+  Result := TPointF.Create(FContainer.Width * vRoom.ScaleX * 0.5, FContainer.Height * vRoom.ScaleY * 0.5);
+end;
+
+{ TLeftBottomRoomObject }
+
+function TLeftBottomRoomObject.Margin: TPointF;
+var
+  vRoom: TSoObject;
+  vD: Single;
+begin
+  vRoom := FContainer['Room'].Val<TSoObject>;
+  vD := (vRoom.Height * vRoom.ScaleX) / 32;
+  Result := TPointF.Create(
+    FContainer.Width * vRoom.ScaleX * 0.5,
+    -FContainer.Height * vRoom.ScaleY * 0.5);
+end;
 
 { TGameUnit }
 
@@ -211,7 +245,7 @@ begin
 
   FLevels0 := TLevels.CreateZeroLevel(
     FContainer,
-    TRectF.Create(0, 384, 640, 1024).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY))
+    TRectF.Create(0, {384}364, 640, 1024).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY))
   );
 
   FLevelMap.AddLevels(FLevels0);
