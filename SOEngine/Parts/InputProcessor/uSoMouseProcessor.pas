@@ -62,7 +62,7 @@ begin
       FTimerDict[it] := 0;
     end;
 
-    if FTimerDict[it] >= 500 then
+    if FTimerDict[it] >= 350 then
     begin
       TSoMouseHandlerFriend(FContainers[it]).MouseLongPress;
       FTimer.Enabled := False;

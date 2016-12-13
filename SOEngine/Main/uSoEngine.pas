@@ -46,7 +46,7 @@ type
     procedure Suspend; virtual;// Suspend main thread
     procedure Resume; virtual;// Resume main thread
 
-    constructor Create(const AImage: TAnonImage); virtual;
+    constructor Create(const AImage: TAnonImage; const AOptions: TSoEngineOptions = nil); virtual;
     destructor Destroy; override;
 
     // You should use Managers to Work with Engine
@@ -64,10 +64,14 @@ implementation
 
 { TSoEngine }
 
-constructor TSoEngine.Create(const AImage: TAnonImage);
+constructor TSoEngine.Create(const AImage: TAnonImage; const AOptions: TSoEngineOptions);
 begin
   FImage := AImage;
-  InitDefaultOptions;
+
+  if AOptions = nil then
+    InitDefaultOptions
+  else
+    FOptions := AOptions;
 
   FEvents:= TSoEngineEvents.Create(AImage);
   FCritical := TCriticalSection.Create;

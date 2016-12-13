@@ -7,10 +7,14 @@ uses
   System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
   System.Math.Vectors,
-  uSoEngine, uGame;
+  uSoEngine, uGame, uSoEngineOptions;
 
 type
   TThreeInRoom = class(TForm)
+    procedure FormKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char;
+      Shift: TShiftState);
   published
     MainImg: TImage;
     procedure FormCreate(Sender: TObject);
@@ -20,6 +24,7 @@ type
     procedure OnEndPaintDefault(ASender: TObject; AImage: TImage);
     { Private declarations }
   public
+    FOptions: TSoEngineOptions;
     { Public declarations }
   end;
 
@@ -32,11 +37,25 @@ implementation
 
 procedure TThreeInRoom.FormCreate(Sender: TObject);
 begin
-  FEngine := TSoEngine.Create(MainImg);
+  FOptions := TSoEngineOptions.Create;
+  FOptions.ColliderOptions.IsActive := False;
+  FEngine := TSoEngine.Create(MainImg, FOptions);
   FEngine.Manager.WorldManager.OnEndPaint := OnEndPaintDefault;
 
-  FGame := TGame.Create(FEngine.Manager);
+  FGame := TGame.Create(FEngine.Manager, FOptions);
   FEngine.Start;
+end;
+
+procedure TThreeInRoom.FormKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  FOptions.ColliderOptions.IsActive := True;
+end;
+
+procedure TThreeInRoom.FormKeyUp(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  FOptions.ColliderOptions.IsActive := False;
 end;
 
 procedure TThreeInRoom.OnEndPaintDefault(ASender: TObject;

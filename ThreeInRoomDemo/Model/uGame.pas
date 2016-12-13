@@ -3,8 +3,9 @@ unit uGame;
 interface
 
 uses
-  System.Generics.Collections,
+  System.Generics.Collections, System.SysUtils,
   uClasses, uSoTypes, uEngine2DClasses, uWorldManager, uUnitManager, uMapPainter, uUnitCreator, uTemplateManager,
+  uSoEngineOptions,
   uUtils, uModel, uSoManager, uSoObject, uModelPerson, uModelHero, uModelClasses;
 
 type
@@ -22,6 +23,7 @@ type
     FLevelMap: TLevelMap;
     FLevels0: TLevels;
     FIcons: TDict<TGameUnit, THeroIcon>;
+    FOptions: TSoEngineOptions;
     procedure StartGame;
     procedure OnResize(ASender: TObject);
     procedure OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
@@ -30,7 +32,7 @@ type
     procedure OnActivateGnome(ASender: TObject);
     procedure SortSprites(ASoObject: TSoObject);
   public
-    constructor Create(const AManager: TSoManager);
+    constructor Create(const AManager: TSoManager; const AOptions: TSoEngineOptions);
     destructor Destroy; override;
   end;
 
@@ -38,9 +40,9 @@ implementation
 
 { TGame }
 
-constructor TGame.Create(const AManager: TSoManager);
+constructor TGame.Create(const AManager: TSoManager; const AOptions: TSoEngineOptions);
 begin
-
+  FOptions := AOptions;
   FGnomes := TList<TGnome>.Create;
   FIcons := TDict<TGameUnit, THeroIcon>.Create;
   FLevelMap := TLevelMap.Create;
@@ -99,10 +101,17 @@ end;
 procedure TGame.OnMouseDown(Sender: TObject; AEventArgs: TMouseEventArgs);
 begin
   FMouseDowned := True;
+
+  if (AEventArgs.X > 24) and (AEventArgs.X < 114) and (AEventArgs.Y > 24) and (AEventArgs.Y < 114)  then
+    FOptions.ColliderOptions.IsActive := True;
+
 end;
 
 procedure TGame.OnMouseMove(Sender: TObject; AEventArgs: TMouseMoveEventArgs);
 begin
+
+//ThreeInRoom.Caption := FloatToStr(AEventARgs.X) + ' --- ' + FloatToStr(AEventARgs.Y);
+//   ThreeInRoom.FOptions.ColliderOptions.IsActive :=
 {  if FMouseDowned then
     if FActiveGnome <> nil then
       FActiveGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y)); }
@@ -113,6 +122,9 @@ begin
   if FActiveGnome <> nil then
     FActiveGnome.AddDestination(TPointF.Create(AEventArgs.X, AEventArgs.Y));
   FMouseDowned := False;
+
+//  if (AEventArgs.X > 24) and (AEventArgs.X < 114) and (AEventArgs.Y > 24) and (AEventArgs.Y < 114)  then
+  FOptions.ColliderOptions.IsActive := False;
 end;
 
 procedure TGame.OnResize(ASender: TObject);

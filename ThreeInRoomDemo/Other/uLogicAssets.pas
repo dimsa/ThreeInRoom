@@ -42,6 +42,29 @@ begin
   Result := 0;
 end;
 
+procedure LevelSolving(const ALevelMap: TLevelMap; const ALevelController: TLevelController; const ASubject: TSoObject; const DX: Single = 0; DY: Single = 0);
+var
+  vNewLevel: Integer;
+begin
+  with ASubject do begin
+    vNewLevel := ALevelMap.LevelInPoint(ALevelController.Level, TPointF.Create(X + Dx, Y + Dy));
+
+    if vNewLevel = ALevelController.Level + 1 then
+    begin
+      ALevelController.Jump(ALevelController.Level + 1);
+      ScaleY := Abs(ScaleY) + 0.1;
+      ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
+    end;
+
+    if (vNewLevel = ALevelController.Level - 1) and (ALevelController.Level - 1 > -1) then
+    begin
+      ALevelController.Jump(ALevelController.Level - 1);
+      ScaleY := Abs(ScaleY) - 0.1;
+      ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
+    end;
+  end;
+end;
+
 
 { TLogicAssets }
 
@@ -118,8 +141,10 @@ exit;
   ASoObject.X := ASoObject.X + Random * 3;
   ASoObject.Y := ASoObject.Y + Random * 3;
   ASoObject.Rotate := ASoObject.Rotate + Random * 2;
-   MovingThroughSidesInner(ASoObject, ASoObject['World'].Val<TSoObject>);
+  MovingThroughSidesInner(ASoObject, ASoObject['World'].Val<TSoObject>);
 end;
+
+
 
 class procedure TLogicAssets.MovingToDestination(ASoObject: TSoObject);
 var
@@ -154,19 +179,7 @@ begin
     if vIsHere then
     begin
       // Обработка падений
-      if vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X, Y)) = vLevelController.Level + 1 then
-      begin
-        vLevelController.Jump(vLevelController.Level + 1);
-        ScaleY := Abs(ScaleY) + 0.1;
-        ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
-      end;
-      if (vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X, Y)) = vLevelController.Level - 1)
-       and (vLevelController.Level - 1 > -1) then
-      begin
-        vLevelController.Jump(vLevelController.Level - 1);
-        ScaleY := Abs(ScaleY) - 0.1;
-        ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
-      end;
+      LevelSolving(vLevelMap, vLevelController, ASoObject);
       Exit;
     end;
 
@@ -183,21 +196,9 @@ begin
      vDy := -Abs(vDy);
    end;
 
-   vNewLevel := vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy));
+  vNewLevel := vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy));
 
-   if vNewLevel = vLevelController.Level + 1 then
-   begin
-     vLevelController.Jump(vLevelController.Level + 1);
-     ScaleY := Abs(ScaleY) + 0.1;
-     ScaleX := MySign(ScaleX) * (Abs(ScaleX) + 0.1);
-  end;
-
-  if (vNewLevel = vLevelController.Level - 1) and (vLevelController.Level - 1 > -1) then
-  begin
-    vLevelController.Jump(vLevelController.Level - 1);
-    ScaleY := Abs(ScaleY) - 0.1;
-    ScaleX := MySign(ScaleX) * (Abs(ScaleX) - 0.1);
-  end;
+  LevelSolving(vLevelMap, vLevelController, ASoObject, vDx, vDy);
 
   if (vNewLevel > vLevelController.Level + 1) or (vNewLevel <  vLevelController.Level - 1) or (vNewLevel = -1) then
     Exit;

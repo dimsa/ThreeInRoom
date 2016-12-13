@@ -138,7 +138,8 @@ procedure TSoModel.ExecuteOnTick;
 begin
   FAnimator.Execute;
   FLogicKeper.Execute;
-  FCollider.Execute;
+  if FOptions.ColliderOptions.IsActive then
+    FCollider.Execute;
   FRenderer.Execute;
 end;
 

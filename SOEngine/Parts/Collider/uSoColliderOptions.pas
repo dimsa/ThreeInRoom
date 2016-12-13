@@ -13,13 +13,16 @@ type
     FGravity: TPointF;
     FIsUsingBox2D: Boolean;
     FIsPositionRefreshing: Boolean;
+    FIsActive: Boolean;
     procedure SetNeedToGenerateObjectsEvents(const Value: Boolean);
     procedure SetNeedToGenerateWorldEvents(const Value: Boolean);
     procedure SetGravity(const Value: TPointF);
     procedure SetIsUsingBox2D(const Value: Boolean);
     procedure SetIsPositionRefreshing(const Value: Boolean);
+    procedure SetIsActive(const Value: Boolean);
   public
     property IsUsingBox2D: Boolean read FIsUsingBox2D write SetIsUsingBox2D;
+    property IsActive: Boolean read FIsActive write SetIsActive;
     property IsPositionRefreshing: Boolean read FIsPositionRefreshing write SetIsPositionRefreshing;
     property NeedToGenerateWorldEvents: Boolean read FNeedToGenerateWorldEvents write SetNeedToGenerateWorldEvents;
     property NeedToGenerateObjectsEvents: Boolean read FNeedToGenerateObjectsEvents write SetNeedToGenerateObjectsEvents;
@@ -38,12 +41,18 @@ begin
   FNeedToGenerateWorldEvents := True;
   FIsPositionRefreshing := True;
   FIsUsingBox2D := True;
+  FIsActive := True;
   FGravity := TPointF.Zero;
 end;
 
 procedure TSoColliderOptions.SetGravity(const Value: TPointF);
 begin
   FGravity := Value;
+end;
+
+procedure TSoColliderOptions.SetIsActive(const Value: Boolean);
+begin
+  FIsActive := Value;
 end;
 
 procedure TSoColliderOptions.SetIsPositionRefreshing(const Value: Boolean);

@@ -10,6 +10,8 @@ object ThreeInRoom: TThreeInRoom
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
   DesignerMasterStyle = 0
   object MainImg: TImage
     MultiResBitmap = <
