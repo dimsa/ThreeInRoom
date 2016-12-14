@@ -12,6 +12,9 @@ type
   end;
 
   TLogicAssets = class
+  private
+    class procedure LevelSolving(const ALevelMap: TLevelMap; const ALevelController: TLevelController; const ASubject: TSoObject; const DX: Single = 0; DY: Single = 0);
+    class procedure CarryItem(ASoObject: TSoObject);
   public
     class procedure OnTestMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     class procedure OnGnomeLongPress(Sender: TObject);
@@ -23,9 +26,9 @@ type
 implementation
 
 uses
-  uModel, uSoSprite, uSoSound, uSoColliderObject, uSoMouseHandler;
+  uModel, uSoSprite, uSoSound, uSoColliderObject, uSoMouseHandler, uModelItem;
 
-procedure LevelSolving(const ALevelMap: TLevelMap; const ALevelController: TLevelController; const ASubject: TSoObject; const DX: Single = 0; DY: Single = 0);
+class procedure TLogicAssets.LevelSolving(const ALevelMap: TLevelMap; const ALevelController: TLevelController; const ASubject: TSoObject; const DX: Single = 0; DY: Single = 0);
 var
   vNewLevel: Integer;
 begin
@@ -48,7 +51,17 @@ begin
   end;
 end;
 
+
+
 { TLogicAssets }
+
+class procedure TLogicAssets.CarryItem(ASoObject: TSoObject);
+var
+  vItem: TModelItem;
+begin
+  vItem := ASoObject['CarryingItem'].Val<TModelItem>;
+  vItem.SetPosition(ASoObject.Center);
+end;
 
 class procedure TLogicAssets.FollowTheShip(ASoObject: TSoObject);
 var

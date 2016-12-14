@@ -12,9 +12,9 @@ type
     FDestination: TDestination;
     FActivated: TNotifyEvent;
     FLevelController: TLevelController;
-    FCarryingItem: TModelItem;
     procedure OnActivate(ASender: TObject);
     procedure SetCarryingItem(const Value: TModelItem);
+    function GetCarryingItem: TModelItem;
   protected
     FActivator: TActivator;
     FName: string;
@@ -24,7 +24,7 @@ type
     property Activated: TNotifyEvent read FActivated write FActivated;
     procedure AddDestination(const APoint: TPointF);
     procedure MoveTo(const AX, AY: Integer); override;
-    property CarryingItem: TModelItem read FCarryingItem write SetCarryingItem;
+    property CarryingItem: TModelItem read GetCarryingItem write SetCarryingItem;
     procedure Init; override;
   end;
 
@@ -54,6 +54,11 @@ begin
   vLevelCorrect :=
     TPointF.Create(0, (-FContainer[RenditionRect].Val<TRectObject>.Height * 0.5 + FLevel * 32)  * FContainer.ScaleY);
   FDestination.Value := APoint + vLevelCorrect;
+end;
+
+function TGnome.GetCarryingItem: TModelItem;
+begin
+  Result := FContainer['CarryingItem'].Val<TModelItem>;
 end;
 
 function TGnome.GetLevel: Integer;
@@ -101,7 +106,7 @@ end;
 
 procedure TGnome.SetCarryingItem(const Value: TModelItem);
 begin
-  FCarryingItem := Value;
+  FContainer['CarryingItem'].Obj := Value;
 end;
 
 procedure TGnome.SetLevel(const Value: Integer);
