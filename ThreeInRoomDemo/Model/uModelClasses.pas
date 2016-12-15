@@ -54,6 +54,36 @@ type
     destructor Destroy; override;
   end;
 
+  THeightZone = class
+  private
+    FRect: TRectF;
+    FHeight: Single;
+    procedure SetHeight(const Value: Single);
+    procedure SetRect(const Value: TRectF);
+  public
+    property Height: Single read FHeight write SetHeight;
+    property Rect: TRectF read FRect write SetRect;
+    constructor Create(const ARect: TRectF; const AHeight: Single);
+  end;
+
+  THeightTree = class
+  private
+    FNodes: TList<THeightTree>;
+    FZones: TList<THeightZone>;
+    FParent: THeightTree;
+    procedure SetParent(const Value: THeightTree);
+    property Parent: THeightTree read FParent write SetParent;
+    procedure RemoveNode(const ANode: THeightTree);
+  public
+    function GetHeightIn(const APoint: TPointF): Single;
+    function IsInTree(const APoint: TPointF): Boolean;
+    procedure AddZone(const AZone: THeightZone);
+    function GetZones: TList<THeightZone>;
+    procedure AddNode(const ANode: THeightTree);
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
   TLevelController = class
   private
     FLevel: Integer;
@@ -145,7 +175,7 @@ var
   i: Integer;
 begin
   for i := 0 to 3 do
-    FLevels[i] := FOriginalLevels[i].Multiply(APosition.Scale).Move(APosition.XY);
+    FLevels[i] := FOriginalLevels[i].Move(APosition.XY);
 end;
 
 { TLevelMap }
@@ -197,6 +227,107 @@ end;
 procedure TLevelController.SetLevel(const Value: Integer);
 begin
   FLevel := Value;
+end;
+
+{ THeightTree }
+
+procedure THeightTree.AddNode(const ANode: THeightTree);
+begin
+  FNodes.Add(ANode);
+  ANode.Parent := Self;
+end;
+
+procedure THeightTree.AddZone(const AZone: THeightZone);
+begin
+  FZones.Add(AZone);
+end;
+
+constructor THeightTree.Create;
+begin
+  FNodes := TList<THeightTree>.Create;
+  FZones := TList<THeightZone>.Create;
+end;
+
+destructor THeightTree.Destroy;
+var
+  i: Integer;
+begin
+  for i := 0 to FNodes.Count - 1 do
+    FNodes[i].Free;
+  FNodes.Free;
+  FZones.Free;
+  inherited;
+end;
+
+function THeightTree.GetHeightIn(const APoint: TPointF): Single;
+var
+  i: Integer;
+  vHeight: Single;
+begin
+  vHeight := 0;
+  for i := 0 to FZones.Count - 1 do
+    if FZones[i].Rect.Contains(APoint) then
+    begin
+      vHeight := vHeight + FZones[i].Height;
+    end;
+
+  for i := 0 to FNodes.Count - 1 do
+  begin
+    vHeight := vHeight + FNodes[i].GetHeightIn(APoint);
+  end;
+
+  Result := vHeight;
+end;
+
+function THeightTree.GetZones: TList<THeightZone>;
+begin
+  Result := FZones;
+end;
+
+function THeightTree.IsInTree(const APoint: TPointF): Boolean;
+var
+  i: Integer;
+begin
+  for i := 0 to FZones.Count - 1 do
+    if FZones[i].Rect.Contains(APoint) then
+      Exit(True);
+
+  for i := 0 to FNodes.Count - 1 do
+    if FNodes[i].IsInTree(APoint) then
+      Exit(True);
+
+  Result := False;
+end;
+
+procedure THeightTree.RemoveNode(const ANode: THeightTree);
+begin
+  FNodes.Remove(ANode);
+end;
+
+procedure THeightTree.SetParent(const Value: THeightTree);
+begin
+  if FParent <> nil then
+    FParent.RemoveNode(Self);
+
+  FParent := Value;
+end;
+
+{ THeightZone }
+
+constructor THeightZone.Create(const ARect: TRectF; const AHeight: Single);
+begin
+  FRect := ARect;
+  FHeight := AHeight;
+end;
+
+procedure THeightZone.SetHeight(const Value: Single);
+begin
+  FHeight := Value;
+end;
+
+procedure THeightZone.SetRect(const Value: TRectF);
+begin
+  FRect := Value;
 end;
 
 end.

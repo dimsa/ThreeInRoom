@@ -8,8 +8,7 @@ uses
 
 type
   TModelItem = class(TRoomObject)
-  public
-    procedure SetPosition(const APoint: TPointF);
+
   end;
 
   TKeyItem = class(TModelItem)
@@ -60,6 +59,8 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
+
+  RandomizePosition(FContainer);
 end;
 
 { TCoatItem }
@@ -73,6 +74,8 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
+
+  RandomizePosition(FContainer);
 end;
 
 { TBootsItem }
@@ -86,13 +89,8 @@ begin
   with FManager.ByObject(FContainer) do begin
     AddRendition(vName);
   end;
-end;
 
-{ TModelItem }
-
-procedure TModelItem.SetPosition(const APoint: TPointF);
-begin
-  FContainer.Center := APoint;
+  RandomizePosition(FContainer);
 end;
 
 end.

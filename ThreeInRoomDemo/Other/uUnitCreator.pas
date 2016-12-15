@@ -15,6 +15,7 @@ type
   private
     FUnitManager: TUnitManager;
     FLevelMap: TLevelMap;
+    function NewGnome: TGnome;
   public
     function NewRoom: TRoom;
     function NewBed: TBed;
@@ -85,6 +86,11 @@ begin
   Result := TCoatItem.Create(FUnitManager, FLevelMap);
 end;
 
+function TUnitCreator.NewGnome: TGnome;
+begin
+  Result := TGnome.Create(FUnitManager, FLevelMap);
+end;
+
 function TUnitCreator.NewHat: THatItem;
 begin
   Result := THatItem.Create(FUnitManager, FLevelMap);
@@ -97,7 +103,6 @@ begin
     0: Result := NewHero('Ty');
     1: Result := NewHero('Ri');
     2: Result := NewHero('On');
-    else  raise Exception.Create('There is no hero with number ' + IntToStr(ANumber));
   end;
 end;
 
@@ -110,19 +115,16 @@ end;
 function TUnitCreator.NewHero(const AName: string): THeroIcon;
 begin
   if LowerCase(AName) = 'ty' then
-    Exit(TTyHero.Create(FUnitManager));
+    Result := TTyHero.Create(FUnitManager);
 
   if LowerCase(AName) = 'ri' then
-    Exit(TRiHero.Create(FUnitManager));
+    Result := TRiHero.Create(FUnitManager);
 
   if LowerCase(AName) = 'on' then
-    Exit(TOnHero.Create(FUnitManager));
+    Result := TOnHero.Create(FUnitManager);
 
   if LowerCase(AName) = 'arkadiy' then
-    Exit(TArkadiyHero.Create(FUnitManager));
-
-   Result := nil;
-   raise Exception.Create('There is no hero with name ' + AName);
+    Result := TArkadiyHero.Create(FUnitManager);
 end;
 
 function TUnitCreator.NewLamp: TLamp;
