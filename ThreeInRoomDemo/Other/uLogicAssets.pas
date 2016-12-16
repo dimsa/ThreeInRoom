@@ -18,7 +18,6 @@ type
   public
     class procedure OnTestMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Single);
     class procedure OnGnomeLongPress(Sender: TObject);
-    //(Sender: TObject; AEventArgs: TMouseEventArgs);
     class procedure MovingThroughSides(ASoObject: TSoObject);
     class procedure MovingByAcceleration(ASoObject: TSoObject);
     class procedure MovingToDestination(ASoObject: TSoObject);
@@ -64,7 +63,6 @@ begin
     end;
   end;
 end;
-
 
 { TLogicAssets }
 
@@ -144,8 +142,6 @@ exit;
   MovingThroughSidesInner(ASoObject, ASoObject['World'].Val<TSoObject>);
 end;
 
-
-
 class procedure TLogicAssets.MovingToDestination(ASoObject: TSoObject);
 var
   vDest: TDestination;
@@ -153,8 +149,10 @@ var
   vIsHere: Boolean;
   vRend: TSoSprite;
   vLevelMap: TLevelMap;
+  vHeightTree: THeightTree;
   vLevelController: TLevelController;
   vNewLevel: Integer;
+  vP: TPointF;
 begin
   vDx := 2;
   vDy := 2;
@@ -162,6 +160,7 @@ begin
     vDest := ASoObject['Destination'].Val<TDestination>;
     vLevelMap := ASoObject['LevelMap'].Val<TLevelMap>;
     vLevelController := ASoObject['LevelController'].Val<TLevelController>;
+    vHeightTree := ASoObject['HeightTree'].Val<THeightTree>;
 
     vIsHere := True;
     if (X <= vDest.X + vDx) and (X >= vDest.X - vDx) then
@@ -183,7 +182,6 @@ begin
       Exit;
     end;
 
-
    if (X > vDest.X) then
    begin
      vDx := -Abs(vDx);
@@ -196,12 +194,22 @@ begin
      vDy := -Abs(vDy);
    end;
 
-  vNewLevel := vLevelMap.LevelInPoint(vLevelController.Level, TPointF.Create(X + vDx, Y + vDy));
+   vP := TPointF.Create(X / Abs(ScaleX) + vDx, (Y) / Abs(ScaleY) - 384 + 32 + vDy);
+
+  if vHeightTree.IsInTree(vP) then
+  begin
+    if Abs(vLevelController.Height - vHeightTree.GetHeightIn(vP)) < 32 then
+      vLevelController.Height := vHeightTree.GetHeightIn(vP);
+  end else
+    Exit; // Выходим, если не попадаем в зону
+
+
+  vNewLevel := vLevelMap.LevelInPoint(vLevelController.Level, vP);
 
   LevelSolving(vLevelMap, vLevelController, ASoObject, vDx, vDy);
 
-  if (vNewLevel > vLevelController.Level + 1) or (vNewLevel <  vLevelController.Level - 1) or (vNewLevel = -1) then
-    Exit;
+ { if (vNewLevel > vLevelController.Level + 1) or (vNewLevel <  vLevelController.Level - 1) or (vNewLevel = -1) then
+    Exit; }
 
    X := X + vDx;
    Y := Y + vDy;

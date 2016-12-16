@@ -22,6 +22,7 @@ type
     FWorld: TSoObject;
     FLevelMap: TLevelMap;
     FLevels0: TLevels;
+    FHeightTree: THeightTree;
     FIcons: TDict<TGameUnit, THeroIcon>;
     FOptions: TSoEngineOptions;
     procedure StartGame;
@@ -46,12 +47,13 @@ begin
   FGnomes := TList<TGnome>.Create;
   FIcons := TDict<TGameUnit, THeroIcon>.Create;
   FLevelMap := TLevelMap.Create;
+  FHeightTree := THeightTree.Create;
 
   FManager := AManager;
 
   with FManager do begin
     FMapPainter := TMapPainter.Create(WorldManager, ResourcePath('RoomBack.png'));
-    FUnitCreator := TUnitCreator.Create(UnitManager, FLevelMap);
+    FUnitCreator := TUnitCreator.Create(UnitManager, FLevelMap, FHeightTree);
 
     TemplateManager.LoadSeJson(ResourcePath('ThreeInRoom.sejson'));
     TemplateManager.LoadSeCss( ResourcePath('Formatters.secss'));

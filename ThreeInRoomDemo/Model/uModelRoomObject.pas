@@ -83,6 +83,9 @@ begin
     TRectF.Empty);
   FContainer['LevelMap'].Val<TLevelMap>.AddLevels(FLevels);
 
+//  FMyHeightTree.AddZone(THeightZone.Create());
+//  FParentHeightTree.AddNode();
+
   RandomizePosition(FContainer);
 end;
 

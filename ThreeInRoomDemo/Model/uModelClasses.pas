@@ -56,14 +56,17 @@ type
 
   THeightZone = class
   private
-    FRect: TRectF;
+    FOriginRect, FRect: TRectF;
     FHeight: Single;
+    FCenter: TPointF;
     procedure SetHeight(const Value: Single);
-    procedure SetRect(const Value: TRectF);
+    procedure SetCenter(const Value: TPointF);
   public
     property Height: Single read FHeight write SetHeight;
-    property Rect: TRectF read FRect write SetRect;
-    constructor Create(const ARect: TRectF; const AHeight: Single);
+    property Rect: TRectF read FRect;// write SetRect;
+    property Center: TPointF read FCenter write SetCenter;
+    constructor Create(const ARect: TRectF; const AHeight: Single); overload;
+    constructor Create(const AX1, AY1, AX2, AY2: Single; const AHeight: Single); overload;
   end;
 
   THeightTree = class
@@ -87,9 +90,12 @@ type
   TLevelController = class
   private
     FLevel: Integer;
+    FHeight: Single;
     procedure SetLevel(const Value: Integer);
+    procedure SetHeight(const Value: Single);
   public
     property Level: Integer read FLevel write SetLevel;
+    property Height: Single read FHeight write SetHeight;
     procedure Jump(const ALevel: Integer);
   end;
 
@@ -224,6 +230,11 @@ begin
   FLevel := ALevel;
 end;
 
+procedure TLevelController.SetHeight(const Value: Single);
+begin
+  FHeight := Value;
+end;
+
 procedure TLevelController.SetLevel(const Value: Integer);
 begin
   FLevel := Value;
@@ -316,8 +327,9 @@ end;
 
 constructor THeightZone.Create(const ARect: TRectF; const AHeight: Single);
 begin
-  FRect := ARect;
+  FOriginRect := ARect;
   FHeight := AHeight;
+  Center := TPointF.Create(0, 0);
 end;
 
 procedure THeightZone.SetHeight(const Value: Single);
@@ -325,9 +337,21 @@ begin
   FHeight := Value;
 end;
 
-procedure THeightZone.SetRect(const Value: TRectF);
+constructor THeightZone.Create(const AX1, AY1, AX2, AY2, AHeight: Single);
+begin
+  Create(TRectF.Create(AX1, AY1, AX2, AY2), Height);
+end;
+
+procedure THeightZone.SetCenter(const Value: TPointF);
+begin
+  FCenter := Value;
+
+  FRect := FOriginRect.Move(Value);
+end;
+
+{procedure THeightZone.SetRect(const Value: TRectF);
 begin
   FRect := Value;
-end;
+end;  }
 
 end.

@@ -41,21 +41,24 @@ type
   private
     FLevelMap: TLevelMap;
     FLevels0: TLevels;
+    FHeightTree: THeightTree;
     FCell: TPointF;
     function Margin: TPointF; override;
   public
     procedure Init; override;
     property Cell: TPointF read FCell;
     procedure Resize; override;
-    constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap); virtual;
+    constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap; const AHeightTree: THeightTree); virtual;
   end;
 
   TRoomObject = class(TGameUnit)
   protected
     FLevelMap: TLevelMap;
+    FMyHeightTree: THeightTree;
+    FParentHeightTree: THeightTree;
   public
     procedure Init; override;
-    constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap); virtual;
+    constructor Create(const AManager: TUnitManager; const ALevelMap: TLevelMap; const AHeightTree: THeightTree); virtual;
   end;
 
   TLeftTopRoomObject = class(TRoomObject)
@@ -225,15 +228,17 @@ end;
 { TRoom }
 
 constructor TRoom.Create(const AManager: TUnitManager;
-  const ALevelMap: TLevelMap);
+  const ALevelMap: TLevelMap; const AHeightTree: THeightTree);
 begin
   FLevelMap := ALevelMap;
+  FHeightTree := AHeightTree;
   inherited Create(AManager);
 end;
 
 procedure TRoom.Init;
 var
   vName: string;
+  vZone: THeightZone;
 begin
   vName := 'Room';
 
@@ -247,6 +252,9 @@ begin
     FContainer,
     TRectF.Create(0, {384}364, 640, 1024).Move(TPointF.Create(-FContainer.Width * 0.5 * FContainer.ScaleX, -FContainer.Height * 0.5 * FContainer.ScaleY))
   );
+
+  vZone := THeightZone.Create(TRectF.Create(0, 0, 640, 640), 0);
+  FHeightTree.AddZone(vZone);
 
   FLevelMap.AddLevels(FLevels0);
 
@@ -276,10 +284,11 @@ end;
 
 { TRoomObject }
 
-constructor TRoomObject.Create(const AManager: TUnitManager;
-  const ALevelMap: TLevelMap);
+constructor TRoomObject.Create(const AManager: TUnitManager; const ALevelMap: TLevelMap; const AHeightTree: THeightTree);
 begin
   FLevelMap := ALevelMap;
+  FParentHeightTree := AHeightTree;
+  FMyHeightTree := THeightTree.Create;
   inherited Create(AManager);
 end;
 
@@ -293,6 +302,7 @@ begin
   begin
     AddProperty('Room', vRoom);
     AddProperty('LevelMap', FLevelMap);
+    AddProperty('HeightTree', FParentHeightTree);
   end;
 end;
 

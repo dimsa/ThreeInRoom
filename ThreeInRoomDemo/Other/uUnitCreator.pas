@@ -15,6 +15,7 @@ type
   private
     FUnitManager: TUnitManager;
     FLevelMap: TLevelMap;
+    FHeightTree: THeightTree;
     function NewGnome: TGnome;
   public
     function NewRoom: TRoom;
@@ -40,7 +41,7 @@ type
     function NewHero(const AName: string): THeroIcon; overload;
     function NewHero(const ANumber: Integer): THeroIcon; overload;
 
-    constructor Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap);
+    constructor Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap; const AHeightTree: THeightTree);
   end;
 
 implementation
@@ -50,50 +51,51 @@ uses
 
 { TUnitCreator }
 
-constructor TUnitCreator.Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap);
+constructor TUnitCreator.Create(const AUnitManager: TUnitManager; const ALevelMap: TLevelMap; const AHeightTree: THeightTree);
 begin
   FUnitManager := AUnitManager;
   FLevelMap := ALevelMap;
+  FHeightTree := AHeightTree;
 end;
 
 function TUnitCreator.NewArkadiy: TArkadiy;
 begin
-  Result := TArkadiy.Create(FUnitManager, FLevelMap);
+  Result := TArkadiy.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewBed: TBed;
 begin
-  Result := TBed.Create(FUnitManager, FLevelMap);
+  Result := TBed.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewBoots: TBootsItem;
 begin
-  Result := TBootsItem.Create(FUnitManager, FLevelMap);
+  Result := TBootsItem.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewCactus: TCactus;
 begin
-  Result := TCactus.Create(FUnitManager, FLevelMap);
+  Result := TCactus.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewChair: TChair;
 begin
-  Result := TChair.Create(FUnitManager, FLevelMap);
+  Result := TChair.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewCoat: TCoatItem;
 begin
-  Result := TCoatItem.Create(FUnitManager, FLevelMap);
+  Result := TCoatItem.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewGnome: TGnome;
 begin
-  Result := TGnome.Create(FUnitManager, FLevelMap);
+  Result := TGnome.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewHat: THatItem;
 begin
-  Result := THatItem.Create(FUnitManager, FLevelMap);
+  Result := THatItem.Create(FUnitManager, FLevelMap, FHeightTree);
   Result.Level := 3;
 end;
 
@@ -108,7 +110,7 @@ end;
 
 function TUnitCreator.NewKey: TKeyItem;
 begin
-  Result := TKeyItem.Create(FUnitManager, FLevelMap);
+  Result := TKeyItem.Create(FUnitManager, FLevelMap, FHeightTree);
   Result.Level := 3;
 end;
 
@@ -129,52 +131,52 @@ end;
 
 function TUnitCreator.NewLamp: TLamp;
 begin
-  Result := TLamp.Create(FUnitManager, FLevelMap);
+  Result := TLamp.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewLocker: TLocker;
 begin
-  Result := TLocker.Create(FUnitManager, FLevelMap);
+  Result := TLocker.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewOn: TGnome;
 begin
-  Result := TOn.Create(FUnitManager, FLevelMap);
+  Result := TOn.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewRi: TGnome;
 begin
-  Result := TRi.Create(FUnitManager, FLevelMap);
+  Result := TRi.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewRoom: TRoom;
 begin
-  Result := TRoom.Create(FUnitManager, FLevelMap);
+  Result := TRoom.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewSpaghetti: TSpaghetti;
 begin
-  Result := TSpaghetti.Create(FUnitManager, FLevelMap);
+  Result := TSpaghetti.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewTable: TTable;
 begin
-  Result := TTable.Create(FUnitManager, FLevelMap);
+  Result := TTable.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewTabouret: TTabouret;
 begin
-  Result := TTabouret.Create(FUnitManager, FLevelMap);
+  Result := TTabouret.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewTy: TGnome;
 begin
-  Result := TTy.Create(FUnitManager, FLevelMap);
+  Result := TTy.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 function TUnitCreator.NewWindowSill: TWindowSill;
 begin
-  Result := TWindowSill.Create(FUnitManager, FLevelMap);
+  Result := TWindowSill.Create(FUnitManager, FLevelMap, FHeightTree);
 end;
 
 end.
