@@ -59,14 +59,17 @@ type
     FOriginRect, FRect: TRectF;
     FHeight: Single;
     FCenter: TPointF;
+    FIsPositive: Boolean;
     procedure SetHeight(const Value: Single);
     procedure SetCenter(const Value: TPointF);
+    procedure SetIsPositive(const Value: Boolean);
   public
     property Height: Single read FHeight write SetHeight;
     property Rect: TRectF read FRect;// write SetRect;
     property Center: TPointF read FCenter write SetCenter;
-    constructor Create(const ARect: TRectF; const AHeight: Single); overload;
-    constructor Create(const AX1, AY1, AX2, AY2: Single; const AHeight: Single); overload;
+    property IsPositive: Boolean read FIsPositive write SetIsPositive;
+    constructor Create(const ARect: TRectF; const AHeight: Single; const AIsPositive: Boolean = True); overload;
+    constructor Create(const AX1, AY1, AX2, AY2: Single; const AHeight: Single; const AIsPositive: Boolean = True); overload;
   end;
 
   THeightTree = class
@@ -325,7 +328,7 @@ end;
 
 { THeightZone }
 
-constructor THeightZone.Create(const ARect: TRectF; const AHeight: Single);
+constructor THeightZone.Create(const ARect: TRectF; const AHeight: Single; const AIsPositive: Boolean);
 begin
   FOriginRect := ARect;
   FHeight := AHeight;
@@ -337,9 +340,14 @@ begin
   FHeight := Value;
 end;
 
-constructor THeightZone.Create(const AX1, AY1, AX2, AY2, AHeight: Single);
+procedure THeightZone.SetIsPositive(const Value: Boolean);
 begin
-  Create(TRectF.Create(AX1, AY1, AX2, AY2), Height);
+  FIsPositive := Value;
+end;
+
+constructor THeightZone.Create(const AX1, AY1, AX2, AY2, AHeight: Single; const AIsPositive: Boolean);
+begin
+  Create(TRectF.Create(AX1, AY1, AX2, AY2), Height, AIsPositive);
 end;
 
 procedure THeightZone.SetCenter(const Value: TPointF);
